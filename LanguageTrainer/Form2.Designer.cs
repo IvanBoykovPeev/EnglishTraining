@@ -182,6 +182,7 @@ namespace LanguageTrainer
             this.Name = "FormInsertNew";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Insert New Word";
+            this.Load += new System.EventHandler(this.FormInsertNew_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

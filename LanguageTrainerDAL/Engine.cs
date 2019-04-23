@@ -56,7 +56,7 @@ namespace LanguageTrainerDAL
             }
         }
 
-        private void GetLevels()
+        public void GetLevels()
         {
             try
             {

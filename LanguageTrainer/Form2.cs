@@ -16,5 +16,10 @@ namespace LanguageTrainer
         {
             InitializeComponent();
         }
+
+        private void FormInsertNew_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
