@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,13 @@ namespace LanguageTrainer
     {
         public Engine engine;
         public List<string> levels;
+        public List<string> themes;
+        public List<string> types;
+        public Random rd = new Random();
+        public int currentRandom;
+        bool IsWord = false;
+        bool IsPhrase = false;
+
         public MainForm()
         {
             InitializeComponent();
@@ -28,12 +36,10 @@ namespace LanguageTrainer
             {
                 this.levels.Add(item.LevelName);
             }
-        }
-
-        private void buttonWords_Click(object sender, EventArgs e)
-        {
-            
+            panelGetBy.Visible = false;
+            panelMain.Hide();
             comboBoxLevels.Items.AddRange(levels.ToArray());
+            comboBoxLevels.SelectedIndex = 0;
         }
 
         private void comboBoxLevels_SelectedIndexChanged(object sender, EventArgs e)
@@ -42,13 +48,185 @@ namespace LanguageTrainer
             {
                 engine.GetWordByLevel(comboBoxLevels.SelectedItem.ToString());
             }
+            currentRandom = rd.Next(engine.Words.Count());
         }
 
         private void buttonStart_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(comboBoxLevels.SelectedItem.ToString());
-            //engine.GetWordByLevel(comboBoxLevels.Selecte.ToString());
-            //textBoxEnglishWord.Text = engine.Words[1].EnglishWord.ToString();
+            textBoxEnglish.Clear();
+            if (IsWord)
+            {
+                engine.GetWordByLevel(comboBoxLevels.SelectedItem.ToString());
+                currentRandom = rd.Next(engine.Words.Count());
+                textBoxEnglish.Text = engine.Words[currentRandom].EnglishWord.ToString();
+            }
+            if (IsPhrase)
+            {
+                engine.GetPhrases(comboBoxLevels.SelectedItem.ToString());
+                currentRandom = rd.Next(engine.Phrases.Count());
+                textBoxEnglish.Text = engine.Phrases[currentRandom].EnglishPhrase.ToString();
+            }
+        }
+
+        private void buttonNext_Click(object sender, EventArgs e)
+        {
+            textBoxEnglish.Clear();
+            textBoxGuess.Clear();
+            labelResult.Text = "";
+            labelResult.BackColor = SystemColors.Control;
+            textBoxGuess.Focus();
+            if (IsWord)
+            {
+                currentRandom = rd.Next(engine.Words.Count());
+                textBoxEnglish.Text = engine.Words[currentRandom].EnglishWord.ToString();
+            }
+            if (IsPhrase)
+            {
+                currentRandom = rd.Next(engine.Phrases.Count());
+                textBoxEnglish.Text = engine.Phrases[currentRandom].EnglishPhrase.ToString();
+            }
+            
+        }
+
+        private void buttonCheck_Click(object sender, EventArgs e)
+        {
+            if (engine.Words[currentRandom].BulgarianWord.ToString() == textBoxGuess.Text)
+            {
+                labelResult.Text = "TRUE";
+                labelResult.BackColor = Color.LightGreen;
+            }
+            else
+            {
+                labelResult.Text = "FALSE";
+                labelResult.BackColor = Color.OrangeRed;
+                textBoxGuess.Focus();
+            }
+        }
+
+        private void buttonAnser_Click(object sender, EventArgs e)
+        {
+            textBoxGuess.Clear();
+            if (IsWord)
+            {
+                textBoxGuess.Text = engine.Words[currentRandom].BulgarianWord.ToString();
+                labelResult.Text = "TRUE";
+                labelResult.BackColor = Color.LightGreen;
+            }
+            if (IsPhrase)
+            {
+                textBoxGuess.Text = engine.Phrases[currentRandom].BulgarianPhrase.ToString();
+                labelResult.Text = "TRUE";
+                labelResult.BackColor = Color.LightGreen;
+            }
+        }
+
+        private void toolStripButtonWords_Click(object sender, EventArgs e)
+        {
+            IsWord = true;
+            IsPhrase = false;
+            panelGetBy.Visible = true;
+            panelMain.Show();
+            buttonByLevel.Text = "WORDS by Level";
+            buttonByThemes.Text = "WORDS by Themes";
+            labelEnglish.Text = "English Word";
+            labelGuess.Text = "Guess Word";
+            buttonByTypes.Show();
+            comboBoxTypes.Show();
+            buttonByThemes.Show();
+            comboBoxThemes.Show();
+            labelThemes.Show();
+            labelTypes.Show();
+            textBoxEnglish.Clear();
+            textBoxGuess.Clear();
+            labelResult.Text = "";
+            labelResult.BackColor = SystemColors.Control;
+            this.themes = new List<string>();
+            foreach (var item in engine.Themes)
+            {
+                this.themes.Add(item.ThemeName);
+            }
+            comboBoxThemes.Items.AddRange(themes.ToArray());
+            comboBoxThemes.SelectedIndex = 0;
+            this.types = new List<string>();
+            foreach (var item in engine.Types)
+            {
+                this.types.Add(item.TypeName);
+            }
+            comboBoxTypes.Items.AddRange(types.ToArray());
+            comboBoxTypes.SelectedIndex = 0;
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            IsWord = false;
+            IsPhrase = true;
+            panelGetBy.Visible = true;
+            panelMain.Show();
+            buttonByLevel.Text = "PHRASES by Level";
+            buttonByThemes.Hide();
+            comboBoxThemes.Hide();
+            labelThemes.Hide();
+            labelEnglish.Text = "English Phrase";
+            labelGuess.Text = "Guess Prase";
+            labelTypes.Hide();
+            buttonByTypes.Hide();
+            comboBoxTypes.Hide();
+            textBoxEnglish.Clear();
+            textBoxGuess.Clear();
+            labelResult.Text = "";
+            labelResult.BackColor = SystemColors.Control;
+        }
+
+        private void buttonByLevel_Click(object sender, EventArgs e)
+        {
+            if (IsWord)
+            {
+                textBoxEnglish.Clear();
+                textBoxGuess.Clear();
+                textBoxGuess.Focus();
+                engine.GetWordByLevel(comboBoxLevels.SelectedItem.ToString());
+                currentRandom = rd.Next(engine.Words.Count());
+                textBoxEnglish.Text = engine.Words[currentRandom].EnglishWord.ToString();
+            }
+            if (IsPhrase)
+            {
+                textBoxEnglish.Clear();
+                textBoxGuess.Clear();
+                textBoxGuess.Focus();
+                engine.GetPhrases(comboBoxLevels.SelectedItem.ToString());
+            }
+        }
+
+        private void buttonByThemes_Click(object sender, EventArgs e)
+        {
+            textBoxEnglish.Clear();
+            textBoxGuess.Clear();
+            textBoxGuess.Focus();
+            if (IsWord)
+            {
+                engine.GetWordByTheme(comboBoxThemes.SelectedItem.ToString());
+                currentRandom = rd.Next(engine.Words.Count());
+                textBoxEnglish.Text = engine.Words[currentRandom].EnglishWord.ToString();
+            }
+        }
+
+        private void buttonByTypes_Click(object sender, EventArgs e)
+        {
+            textBoxEnglish.Clear();
+            textBoxGuess.Clear();
+            textBoxGuess.Focus();
+            if (IsWord)
+            {
+                engine.GetWordByType(comboBoxTypes.SelectedItem.ToString());
+                currentRandom = rd.Next(engine.Words.Count());
+                textBoxEnglish.Text = engine.Words[currentRandom].EnglishWord.ToString();
+            }
+        }
+
+        private void NewWordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            InsertForm insertForm = new InsertForm();
+            insertForm.Show();
         }
     }
 }
