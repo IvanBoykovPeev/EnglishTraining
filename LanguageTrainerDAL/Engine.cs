@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
+using System.IO;
 
 namespace LanguageTrainerDAL
 {
     public class Engine
     {
-        private string connectionString = @"server=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\blade\Source\Repos\LanguageTrainer\LanguageTrainer\DatabaseWordBank.mdf;Integrated Security = True";
+        private static string directory = Path.GetDirectoryName(Application.ExecutablePath) + "\\DatabaseWordBank.mdf";
+        private string connectionString = @"server=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + directory + ";Integrated Security = True";
             //@"server=.;" +
             //"integrated security=true;database=WordBank";
         private SqlConnection connection;
