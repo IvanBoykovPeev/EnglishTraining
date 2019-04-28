@@ -43,7 +43,7 @@ namespace LanguageTrainer
             comboBoxLevels.SelectedIndex = 0;
             listBoxThemes.Visible = false;
             labelThemes.Visible = false;
-
+            
         }
 
         private void comboBoxLevels_SelectedIndexChanged(object sender, EventArgs e)
@@ -126,6 +126,7 @@ namespace LanguageTrainer
 
         private void toolStripButtonWords_Click(object sender, EventArgs e)
         {
+            MessageBox.Show(engine.CurrentDirectory);
             IsWord = true;
             IsPhrase = false;
             panelGetBy.Visible = true;

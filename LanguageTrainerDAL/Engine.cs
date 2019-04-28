@@ -10,7 +10,8 @@ namespace LanguageTrainerDAL
     public class Engine
     {
         private static string directory = Path.GetDirectoryName(Application.ExecutablePath) + "\\DatabaseWordBank.mdf";
-        private string connectionString = @"server=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + directory + ";Integrated Security = True";
+        private static string currentDirectory = @"D:\EnglishTraining.git\trunk\LanguageTrainer\DatabaseWordBank.mdf";
+        private string connectionString = @"server=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + currentDirectory + ";Integrated Security = True";
             //@"server=.;" +
             //"integrated security=true;database=WordBank";
         private SqlConnection connection;
@@ -335,5 +336,6 @@ namespace LanguageTrainerDAL
         public List<Phrase> Phrases { get => phrases; set => phrases = value; }
         public List<Type> Types { get => types; set => types = value; }
         public List<Level> Levels { get => levels; set => levels = value; }
+        public string CurrentDirectory { get => currentDirectory; set => currentDirectory = value; }
     }
 }
