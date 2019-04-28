@@ -78,16 +78,23 @@ namespace LanguageTrainer
             textBoxGuess.Clear();
             labelResult.Text = "";
             labelResult.BackColor = SystemColors.Control;
-            textBoxGuess.Focus();
+            
+            
             if (IsWord)
             {
                 currentRandom = rd.Next(engine.Words.Count());
+                if (engine.Words.Count > 0)
+                {
                 textBoxEnglish.Text = engine.Words[currentRandom].EnglishWord.ToString();
+                labelWordType.Text = engine.Words[currentRandom].WordType.ToString();
+                    textBoxGuess.Focus();
+                }
             }
             if (IsPhrase)
             {
                 currentRandom = rd.Next(engine.Phrases.Count());
                 textBoxEnglish.Text = engine.Phrases[currentRandom].EnglishPhrase.ToString();
+                textBoxGuess.Focus();
             }
             
         }
@@ -184,14 +191,26 @@ namespace LanguageTrainer
 
         private void buttonByLevel_Click(object sender, EventArgs e)
         {
+            textBoxEnglish.Clear();
+            textBoxGuess.Clear();
+            labelResult.Text = "";
+            labelResult.BackColor = SystemColors.Control;
             if (IsWord)
-            {
-                textBoxEnglish.Clear();
-                textBoxGuess.Clear();
-                textBoxGuess.Focus();
+            {                
                 engine.GetWordByLevel(comboBoxLevels.SelectedItem.ToString());
                 currentRandom = rd.Next(engine.Words.Count());
-                textBoxEnglish.Text = engine.Words[currentRandom].EnglishWord.ToString();
+                if (engine.Words.Count > 0)
+                {
+                    textBoxEnglish.Text = engine.Words[currentRandom].EnglishWord.ToString();
+                    labelWordType.Text = engine.Words[currentRandom].WordType.ToString();
+                    textBoxGuess.Focus();
+                }
+                else
+                {
+                    MessageBox.Show("There isn't words in this level!");
+                }
+                
+                
             }
             if (IsPhrase)
             {
@@ -208,7 +227,8 @@ namespace LanguageTrainer
         {
             textBoxEnglish.Clear();
             textBoxGuess.Clear();
-            
+            labelResult.Text = "";
+            labelResult.BackColor = SystemColors.Control;
             if (IsWord)
             {
                 engine.GetWordByTheme(listBoxThemes.SelectedItem.ToString());
@@ -216,6 +236,7 @@ namespace LanguageTrainer
                 if (engine.Words.Count > 0)
                 {
                     textBoxEnglish.Text = engine.Words[currentRandom].EnglishWord.ToString();
+                    labelWordType.Text = engine.Words[currentRandom].WordType.ToString();
                     textBoxGuess.Focus();
                 }
                 else
@@ -228,7 +249,9 @@ namespace LanguageTrainer
         private void buttonByTypes_Click(object sender, EventArgs e)
         {
             textBoxEnglish.Clear();
-            textBoxGuess.Clear();            
+            textBoxGuess.Clear();
+            labelResult.Text = "";
+            labelResult.BackColor = SystemColors.Control;
             if (IsWord)
             {
                 engine.GetWordByType(comboBoxTypes.SelectedItem.ToString());
@@ -236,6 +259,7 @@ namespace LanguageTrainer
                 if (engine.Words.Count > 0)
                 {
                     textBoxEnglish.Text = engine.Words[currentRandom].EnglishWord.ToString();
+                    labelWordType.Text = engine.Words[currentRandom].WordType.ToString();
                     textBoxGuess.Focus();
                 }
                 else

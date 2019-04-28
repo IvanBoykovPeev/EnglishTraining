@@ -157,7 +157,14 @@ namespace LanguageTrainerDAL
             Words.Clear();
             try
             {
-                string sqlCommand = "SELECT WordID, EnglishWord, BulgarianWord FROM Words WHERE LevelID = (SELECT LevelID FROM Levels WHERE LevelName = @Level)";
+                string sqlCommand = "" +
+                    "SELECT w.WordID, w.EnglishWord, w.BulgarianWord, t.TypeName " +
+                    "FROM Words AS w " +
+                    "JOIN Levels AS l " +
+                    "ON l.LevelID = w.LevelID " +
+                    "JOIN Types AS t " +
+                    "ON t.TypeID = w.TypeID " +
+                    "WHERE l.LevelName = @Level";
                 SqlCommand command = new SqlCommand(sqlCommand, connection);
                 SqlParameter sqlThemeParameter = new SqlParameter("@Level", SqlDbType.NVarChar);
                 sqlThemeParameter.Value = currentlevel;
@@ -173,7 +180,7 @@ namespace LanguageTrainerDAL
                         word.Id = reader.GetInt32(0);
                         word.EnglishWord = reader.GetString(1);
                         word.BulgarianWord = reader.GetString(2);
-                        
+                        word.WordType = reader.GetString(3);
                         Words.Add(word);
                     }
                 }
@@ -194,7 +201,13 @@ namespace LanguageTrainerDAL
             Words.Clear();
             try
             {
-                string sqlCommand = "SELECT WordID, EnglishWord, BulgarianWord FROM Words WHERE ThemeID = (SELECT ThemeID FROM Themes WHERE ThemeName = @Theme)";
+                string sqlCommand = "SELECT w.WordID, w.EnglishWord, w.BulgarianWord, ty.TypeName " +
+                    "FROM Words AS w " +
+                    "JOIN Themes AS t " +
+                    "ON t.ThemeID = w.ThemeID " +
+                    "JOIN Types AS ty " +
+                    "ON ty.TypeID = w.TypeID " +
+                    "WHERE t.ThemeName = @Theme ";
                 SqlCommand command = new SqlCommand(sqlCommand, connection);
                 SqlParameter sqlThemeParameter = new SqlParameter("@Theme", SqlDbType.NVarChar);
                 sqlThemeParameter.Value = theme;
@@ -209,7 +222,8 @@ namespace LanguageTrainerDAL
                         Word word = new Word();
                         word.Id = reader.GetInt32(0);
                         word.EnglishWord = reader.GetString(1);
-                        word.BulgarianWord = reader.GetString(2);                        
+                        word.BulgarianWord = reader.GetString(2);
+                        word.WordType = reader.GetString(3);
                         Words.Add(word);
                     }
                 }
@@ -298,7 +312,11 @@ namespace LanguageTrainerDAL
             Words.Clear();
             try
             {
-                string sqlCommand = "SELECT WordID, EnglishWord, BulgarianWord FROM Words WHERE TypeID = (SELECT TypeID FROM Types WHERE TypeName = @Type)";
+                string sqlCommand = "SELECT WordID, EnglishWord, BulgarianWord, t.TypeName " +
+                    "FROM Words AS w " +
+                    "JOIN Types AS t " + 
+                    "ON t.TypeID = w.TypeID " + 
+                    "WHERE t.TypeName = @Type";
                 SqlCommand command = new SqlCommand(sqlCommand, connection);
                 SqlParameter sqlThemeParameter = new SqlParameter("@Type", SqlDbType.NVarChar);
                 sqlThemeParameter.Value = level;
@@ -314,7 +332,7 @@ namespace LanguageTrainerDAL
                         word.Id = reader.GetInt32(0);
                         word.EnglishWord = reader.GetString(1);
                         word.BulgarianWord = reader.GetString(2);
-                        
+                        word.WordType = reader.GetString(3);
                         Words.Add(word);
                     }
                 }
