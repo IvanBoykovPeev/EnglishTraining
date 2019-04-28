@@ -247,7 +247,6 @@ namespace LanguageTrainerDAL
                 command.Parameters.Add(sqlParameterTheme);
                 command.Parameters.Add(sqlParameterType);
                 connection.Open();
-                MessageBox.Show(command.ExecuteNonQuery().ToString());
 
             }
             catch (SqlException ex)

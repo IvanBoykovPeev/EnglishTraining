@@ -36,7 +36,6 @@
             this.textBoxGuess = new System.Windows.Forms.TextBox();
             this.comboBoxLevels = new System.Windows.Forms.ComboBox();
             this.comboBoxTypes = new System.Windows.Forms.ComboBox();
-            this.comboBoxThemes = new System.Windows.Forms.ComboBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.NewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,11 +61,14 @@
             this.panelGetBy = new System.Windows.Forms.Panel();
             this.buttonShowAnser = new System.Windows.Forms.Button();
             this.panelMain = new System.Windows.Forms.Panel();
-            this.buttonStart = new System.Windows.Forms.Button();
+            this.listBoxThemes = new System.Windows.Forms.ListBox();
+            this.newPhraseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.panelGetBy.SuspendLayout();
             this.panelMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // labelEnglish
@@ -112,7 +114,7 @@
             // 
             this.comboBoxLevels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxLevels.FormattingEnabled = true;
-            this.comboBoxLevels.Location = new System.Drawing.Point(0, 25);
+            this.comboBoxLevels.Location = new System.Drawing.Point(207, 26);
             this.comboBoxLevels.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.comboBoxLevels.Name = "comboBoxLevels";
             this.comboBoxLevels.Size = new System.Drawing.Size(180, 28);
@@ -123,21 +125,11 @@
             // 
             this.comboBoxTypes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxTypes.FormattingEnabled = true;
-            this.comboBoxTypes.Location = new System.Drawing.Point(381, 25);
+            this.comboBoxTypes.Location = new System.Drawing.Point(395, 26);
             this.comboBoxTypes.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.comboBoxTypes.Name = "comboBoxTypes";
             this.comboBoxTypes.Size = new System.Drawing.Size(180, 28);
             this.comboBoxTypes.TabIndex = 5;
-            // 
-            // comboBoxThemes
-            // 
-            this.comboBoxThemes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxThemes.FormattingEnabled = true;
-            this.comboBoxThemes.Location = new System.Drawing.Point(190, 25);
-            this.comboBoxThemes.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.comboBoxThemes.Name = "comboBoxThemes";
-            this.comboBoxThemes.Size = new System.Drawing.Size(180, 28);
-            this.comboBoxThemes.TabIndex = 6;
             // 
             // contextMenuStrip1
             // 
@@ -152,14 +144,15 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
-            this.menuStrip1.Size = new System.Drawing.Size(848, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(1140, 25);
             this.menuStrip1.TabIndex = 8;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // NewToolStripMenuItem
             // 
             this.NewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.NewWordToolStripMenuItem});
+            this.NewWordToolStripMenuItem,
+            this.newPhraseToolStripMenuItem});
             this.NewToolStripMenuItem.Name = "NewToolStripMenuItem";
             this.NewToolStripMenuItem.Size = new System.Drawing.Size(45, 19);
             this.NewToolStripMenuItem.Text = "NEW";
@@ -167,7 +160,7 @@
             // NewWordToolStripMenuItem
             // 
             this.NewWordToolStripMenuItem.Name = "NewWordToolStripMenuItem";
-            this.NewWordToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.NewWordToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.NewWordToolStripMenuItem.Text = "NewWord";
             this.NewWordToolStripMenuItem.Click += new System.EventHandler(this.NewWordToolStripMenuItem_Click);
             // 
@@ -195,19 +188,21 @@
             // 
             // buttonByLevel
             // 
-            this.buttonByLevel.Location = new System.Drawing.Point(0, 5);
+            this.buttonByLevel.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonByLevel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.buttonByLevel.Location = new System.Drawing.Point(7, 5);
             this.buttonByLevel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonByLevel.Name = "buttonByLevel";
             this.buttonByLevel.Size = new System.Drawing.Size(182, 35);
             this.buttonByLevel.TabIndex = 11;
             this.buttonByLevel.Text = "WORDS by Level";
-            this.buttonByLevel.UseVisualStyleBackColor = true;
+            this.buttonByLevel.UseVisualStyleBackColor = false;
             this.buttonByLevel.Click += new System.EventHandler(this.buttonByLevel_Click);
             // 
             // labelLevels
             // 
             this.labelLevels.AutoSize = true;
-            this.labelLevels.Location = new System.Drawing.Point(4, 0);
+            this.labelLevels.Location = new System.Drawing.Point(203, 1);
             this.labelLevels.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelLevels.Name = "labelLevels";
             this.labelLevels.Size = new System.Drawing.Size(71, 20);
@@ -217,7 +212,7 @@
             // labelThemes
             // 
             this.labelThemes.AutoSize = true;
-            this.labelThemes.Location = new System.Drawing.Point(190, 0);
+            this.labelThemes.Location = new System.Drawing.Point(871, 126);
             this.labelThemes.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelThemes.Name = "labelThemes";
             this.labelThemes.Size = new System.Drawing.Size(76, 20);
@@ -227,7 +222,7 @@
             // labelTypes
             // 
             this.labelTypes.AutoSize = true;
-            this.labelTypes.Location = new System.Drawing.Point(381, 0);
+            this.labelTypes.Location = new System.Drawing.Point(455, 1);
             this.labelTypes.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelTypes.Name = "labelTypes";
             this.labelTypes.Size = new System.Drawing.Size(61, 20);
@@ -237,7 +232,7 @@
             // toolStrip1
             // 
             this.toolStrip1.AutoSize = false;
-            this.toolStrip1.BackColor = System.Drawing.SystemColors.MenuBar;
+            this.toolStrip1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonWords,
             this.toolStripSeparator1,
@@ -250,7 +245,7 @@
             this.toolStrip1.Location = new System.Drawing.Point(0, 25);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStrip1.Size = new System.Drawing.Size(848, 88);
+            this.toolStrip1.Size = new System.Drawing.Size(1140, 88);
             this.toolStrip1.Stretch = true;
             this.toolStrip1.TabIndex = 18;
             this.toolStrip1.Text = "toolStrip1";
@@ -311,24 +306,28 @@
             // 
             // buttonByThemes
             // 
-            this.buttonByThemes.Location = new System.Drawing.Point(190, 5);
+            this.buttonByThemes.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonByThemes.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.buttonByThemes.Location = new System.Drawing.Point(459, 5);
             this.buttonByThemes.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonByThemes.Name = "buttonByThemes";
-            this.buttonByThemes.Size = new System.Drawing.Size(182, 35);
+            this.buttonByThemes.Size = new System.Drawing.Size(156, 35);
             this.buttonByThemes.TabIndex = 19;
             this.buttonByThemes.Text = "WORDS by Themes";
-            this.buttonByThemes.UseVisualStyleBackColor = true;
+            this.buttonByThemes.UseVisualStyleBackColor = false;
             this.buttonByThemes.Click += new System.EventHandler(this.buttonByThemes_Click);
             // 
             // buttonByTypes
             // 
-            this.buttonByTypes.Location = new System.Drawing.Point(381, 5);
+            this.buttonByTypes.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonByTypes.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.buttonByTypes.Location = new System.Drawing.Point(195, 5);
             this.buttonByTypes.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonByTypes.Name = "buttonByTypes";
             this.buttonByTypes.Size = new System.Drawing.Size(182, 35);
             this.buttonByTypes.TabIndex = 20;
             this.buttonByTypes.Text = "WORDS by Types";
-            this.buttonByTypes.UseVisualStyleBackColor = true;
+            this.buttonByTypes.UseVisualStyleBackColor = false;
             this.buttonByTypes.Click += new System.EventHandler(this.buttonByTypes_Click);
             // 
             // buttonNext
@@ -347,10 +346,10 @@
             this.panelGetBy.Controls.Add(this.buttonByLevel);
             this.panelGetBy.Controls.Add(this.buttonByThemes);
             this.panelGetBy.Controls.Add(this.buttonByTypes);
-            this.panelGetBy.Location = new System.Drawing.Point(129, 143);
+            this.panelGetBy.Location = new System.Drawing.Point(216, 142);
             this.panelGetBy.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panelGetBy.Name = "panelGetBy";
-            this.panelGetBy.Size = new System.Drawing.Size(562, 43);
+            this.panelGetBy.Size = new System.Drawing.Size(619, 43);
             this.panelGetBy.TabIndex = 22;
             // 
             // buttonShowAnser
@@ -366,14 +365,12 @@
             // 
             // panelMain
             // 
+            this.panelMain.Controls.Add(this.pictureBox1);
             this.panelMain.Controls.Add(this.comboBoxLevels);
             this.panelMain.Controls.Add(this.labelLevels);
             this.panelMain.Controls.Add(this.buttonShowAnser);
             this.panelMain.Controls.Add(this.buttonNext);
-            this.panelMain.Controls.Add(this.labelThemes);
-            this.panelMain.Controls.Add(this.comboBoxThemes);
             this.panelMain.Controls.Add(this.labelResult);
-            this.panelMain.Controls.Add(this.buttonStart);
             this.panelMain.Controls.Add(this.buttonCheck);
             this.panelMain.Controls.Add(this.comboBoxTypes);
             this.panelMain.Controls.Add(this.labelTypes);
@@ -384,27 +381,43 @@
             this.panelMain.Location = new System.Drawing.Point(18, 195);
             this.panelMain.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(817, 268);
+            this.panelMain.Size = new System.Drawing.Size(817, 403);
             this.panelMain.TabIndex = 24;
             // 
-            // buttonStart
+            // listBoxThemes
             // 
-            this.buttonStart.Location = new System.Drawing.Point(657, 25);
-            this.buttonStart.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.buttonStart.Name = "buttonStart";
-            this.buttonStart.Size = new System.Drawing.Size(156, 28);
-            this.buttonStart.TabIndex = 17;
-            this.buttonStart.Text = "START";
-            this.buttonStart.UseVisualStyleBackColor = true;
-            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
+            this.listBoxThemes.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.listBoxThemes.FormattingEnabled = true;
+            this.listBoxThemes.ItemHeight = 20;
+            this.listBoxThemes.Location = new System.Drawing.Point(875, 149);
+            this.listBoxThemes.Name = "listBoxThemes";
+            this.listBoxThemes.Size = new System.Drawing.Size(253, 304);
+            this.listBoxThemes.TabIndex = 25;
+            // 
+            // newPhraseToolStripMenuItem
+            // 
+            this.newPhraseToolStripMenuItem.Name = "newPhraseToolStripMenuItem";
+            this.newPhraseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newPhraseToolStripMenuItem.Text = "New Phrase";
+            this.newPhraseToolStripMenuItem.Click += new System.EventHandler(this.newPhraseToolStripMenuItem_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(207, 218);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(150, 150);
+            this.pictureBox1.TabIndex = 24;
+            this.pictureBox1.TabStop = false;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(848, 504);
+            this.ClientSize = new System.Drawing.Size(1140, 612);
+            this.Controls.Add(this.listBoxThemes);
             this.Controls.Add(this.panelMain);
             this.Controls.Add(this.panelGetBy);
+            this.Controls.Add(this.labelThemes);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -421,6 +434,7 @@
             this.panelGetBy.ResumeLayout(false);
             this.panelMain.ResumeLayout(false);
             this.panelMain.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -434,7 +448,6 @@
         private System.Windows.Forms.TextBox textBoxGuess;
         private System.Windows.Forms.ComboBox comboBoxLevels;
         private System.Windows.Forms.ComboBox comboBoxTypes;
-        private System.Windows.Forms.ComboBox comboBoxThemes;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem NewToolStripMenuItem;
@@ -460,6 +473,8 @@
         private System.Windows.Forms.Panel panelGetBy;
         private System.Windows.Forms.Button buttonShowAnser;
         private System.Windows.Forms.Panel panelMain;
-        private System.Windows.Forms.Button buttonStart;
+        private System.Windows.Forms.ListBox listBoxThemes;
+        private System.Windows.Forms.ToolStripMenuItem newPhraseToolStripMenuItem;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

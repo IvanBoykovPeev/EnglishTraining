@@ -64,11 +64,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="InsertForm.cs">
+    <Compile Include="NewPhraseForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="InsertForm.Designer.cs">
-      <DependentUpon>InsertForm.cs</DependentUpon>
+    <Compile Include="NewPhraseForm.Designer.cs">
+      <DependentUpon>NewPhraseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewWordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewWordForm.Designer.cs">
+      <DependentUpon>NewWordForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -78,8 +84,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="InsertForm.resx">
-      <DependentUpon>InsertForm.cs</DependentUpon>
+    <EmbeddedResource Include="NewPhraseForm.resx">
+      <DependentUpon>NewPhraseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewWordForm.resx">
+      <DependentUpon>NewWordForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -132,6 +141,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Pictures\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

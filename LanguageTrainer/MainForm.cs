@@ -40,6 +40,9 @@ namespace LanguageTrainer
             panelMain.Hide();
             comboBoxLevels.Items.AddRange(levels.ToArray());
             comboBoxLevels.SelectedIndex = 0;
+            listBoxThemes.Visible = false;
+            labelThemes.Visible = false;
+
         }
 
         private void comboBoxLevels_SelectedIndexChanged(object sender, EventArgs e)
@@ -133,8 +136,7 @@ namespace LanguageTrainer
             buttonByTypes.Show();
             comboBoxTypes.Show();
             buttonByThemes.Show();
-            comboBoxThemes.Show();
-            labelThemes.Show();
+            labelThemes.Visible = true;
             labelTypes.Show();
             textBoxEnglish.Clear();
             textBoxGuess.Clear();
@@ -145,8 +147,6 @@ namespace LanguageTrainer
             {
                 this.themes.Add(item.ThemeName);
             }
-            comboBoxThemes.Items.AddRange(themes.ToArray());
-            comboBoxThemes.SelectedIndex = 0;
             this.types = new List<string>();
             foreach (var item in engine.Types)
             {
@@ -154,6 +154,9 @@ namespace LanguageTrainer
             }
             comboBoxTypes.Items.AddRange(types.ToArray());
             comboBoxTypes.SelectedIndex = 0;
+            listBoxThemes.Items.AddRange(themes.ToArray());
+            listBoxThemes.SelectedIndex = 0;
+            listBoxThemes.Visible = true;
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
@@ -161,10 +164,10 @@ namespace LanguageTrainer
             IsWord = false;
             IsPhrase = true;
             panelGetBy.Visible = true;
+            listBoxThemes.Visible = false;
             panelMain.Show();
             buttonByLevel.Text = "PHRASES by Level";
             buttonByThemes.Hide();
-            comboBoxThemes.Hide();
             labelThemes.Hide();
             labelEnglish.Text = "English Phrase";
             labelGuess.Text = "Guess Prase";
@@ -187,6 +190,7 @@ namespace LanguageTrainer
                 engine.GetWordByLevel(comboBoxLevels.SelectedItem.ToString());
                 currentRandom = rd.Next(engine.Words.Count());
                 textBoxEnglish.Text = engine.Words[currentRandom].EnglishWord.ToString();
+                pictureBox1.Image = new Bitmap(@"D:\EnglishTraining.git\trunk\LanguageTrainer\Pictures\teacher.jpg");
             }
             if (IsPhrase)
             {
@@ -194,6 +198,8 @@ namespace LanguageTrainer
                 textBoxGuess.Clear();
                 textBoxGuess.Focus();
                 engine.GetPhrases(comboBoxLevels.SelectedItem.ToString());
+                currentRandom = rd.Next(engine.Phrases.Count());
+                textBoxEnglish.Text = engine.Phrases[currentRandom].EnglishPhrase.ToString();
             }
         }
 
@@ -201,32 +207,57 @@ namespace LanguageTrainer
         {
             textBoxEnglish.Clear();
             textBoxGuess.Clear();
-            textBoxGuess.Focus();
+            
             if (IsWord)
             {
-                engine.GetWordByTheme(comboBoxThemes.SelectedItem.ToString());
+                engine.GetWordByTheme(listBoxThemes.SelectedItem.ToString());
                 currentRandom = rd.Next(engine.Words.Count());
-                textBoxEnglish.Text = engine.Words[currentRandom].EnglishWord.ToString();
+                if (engine.Words.Count > 0)
+                {
+                    textBoxEnglish.Text = engine.Words[currentRandom].EnglishWord.ToString();
+                    textBoxGuess.Focus();
+                }
+                else
+                {
+                    MessageBox.Show("There isn't words in this themes!");
+                }
             }
         }
 
         private void buttonByTypes_Click(object sender, EventArgs e)
         {
             textBoxEnglish.Clear();
-            textBoxGuess.Clear();
-            textBoxGuess.Focus();
+            textBoxGuess.Clear();            
             if (IsWord)
             {
                 engine.GetWordByType(comboBoxTypes.SelectedItem.ToString());
                 currentRandom = rd.Next(engine.Words.Count());
-                textBoxEnglish.Text = engine.Words[currentRandom].EnglishWord.ToString();
+                if (engine.Words.Count > 0)
+                {
+                    textBoxEnglish.Text = engine.Words[currentRandom].EnglishWord.ToString();
+                    textBoxGuess.Focus();
+                }
+                else
+                {
+                    MessageBox.Show("There isn't words in this types!");
+                }
             }
         }
 
         private void NewWordToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InsertForm insertForm = new InsertForm();
-            insertForm.Show();
+            NewWordForm newWordForm = new NewWordForm();
+            newWordForm.Show();
+            newWordForm.ComboBoxThemes.Visible = true;
+            newWordForm.ComboBoxTypes.Visible = true;
+            newWordForm.LabelTheme.Visible = true;
+            newWordForm.ComboBoxTypes.Visible = true;
+        }
+
+        private void newPhraseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewPhraseForm newPhraseForm = new NewPhraseForm();
+            newPhraseForm.Show();            
         }
     }
 }
