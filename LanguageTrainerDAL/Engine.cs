@@ -7,13 +7,14 @@ using System.IO;
 
 namespace LanguageTrainerDAL
 {
-    public class Engine
+    public class engine
     {
         private static string directory = Path.GetDirectoryName(Application.ExecutablePath) + "\\DatabaseWordBank.mdf";
         private static string currentDirectory = @"D:\EnglishTraining.git\trunk\LanguageTrainer\DatabaseWordBank.mdf";
-        private string connectionString = @"server=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + currentDirectory + ";Integrated Security = True";
-            //@"server=.;" +
-            //"integrated security=true;database=WordBank";
+        private string connectionString = @"server=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + currentDirectory + ";Integrated Security = True";       
+
+        //@"server=.;" +
+        //"integrated security=true;database=WordBank";
         private SqlConnection connection;
         private List<Level> levels = new List<Level>();
         private List<Theme> themes = new List<Theme>();
@@ -21,7 +22,7 @@ namespace LanguageTrainerDAL
         private List<Word> words = new List<Word>();
         private List<Phrase> phrases = new List<Phrase>();
 
-        public Engine()
+        public engine()
         {
             connection = new SqlConnection(connectionString);
             GetLevels();
@@ -262,6 +263,10 @@ namespace LanguageTrainerDAL
                 command.Parameters.Add(sqlParameterTheme);
                 command.Parameters.Add(sqlParameterType);
                 connection.Open();
+                if (command.ExecuteNonQuery() >= 1)
+                {
+                    MessageBox.Show("Word inserted!");
+                }
 
             }
             catch (SqlException ex)
@@ -292,9 +297,34 @@ namespace LanguageTrainerDAL
                 command.Parameters.Add(sqlBulgarianPhraseParameter);
                 command.Parameters.Add(sqlParameterLevel);
                 connection.Open();
-                if (command.ExecuteNonQuery() > 1)
+                if (command.ExecuteNonQuery() >= 1)
                 {
                     MessageBox.Show("Phrase inserted!");
+                }
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public void InsertNewTheme(string currentEnglishTheme)
+        {
+            try
+            {
+                string sqlCommand = "INSERT INTO Themes(ThemeName) VALUES (@ThemeName)";
+                SqlCommand command = new SqlCommand(sqlCommand, connection);
+                SqlParameter sqlThemeParameter = new SqlParameter("@ThemeName", SqlDbType.NVarChar);
+                sqlThemeParameter.Value = currentEnglishTheme;
+                command.Parameters.Add(sqlThemeParameter);
+                connection.Open();
+                if (command.ExecuteNonQuery() >= 1)
+                {
+                    MessageBox.Show("Theme inserted!");
                 }
             }
             catch (SqlException ex)

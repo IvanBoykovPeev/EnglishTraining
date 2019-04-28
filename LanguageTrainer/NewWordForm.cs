@@ -16,7 +16,7 @@ namespace LanguageTrainer
         public List<string> levels;
         public List<string> themes;
         public List<string> types;
-        public Engine engine;
+        public engine engine;
         public NewWordForm()
         {
             InitializeComponent();
@@ -27,7 +27,7 @@ namespace LanguageTrainer
             this.levels = new List<string>();
             this.themes = new List<string>();
             this.types = new List<string>();
-            this.engine = new Engine();
+            this.engine = new engine();
             foreach (var item in engine.Levels)
             {
                 this.levels.Add(item.LevelName);

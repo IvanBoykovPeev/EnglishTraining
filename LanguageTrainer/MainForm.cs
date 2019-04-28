@@ -14,7 +14,7 @@ namespace LanguageTrainer
 {
     public partial class MainForm : Form
     {
-        public Engine engine;
+        public engine engine;
         public List<string> levels;
         public List<string> themes;
         public List<string> types;
@@ -31,7 +31,7 @@ namespace LanguageTrainer
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            this.engine = new Engine();
+            this.engine = new engine();
             this.levels = new List<string>();
             foreach (var item in engine.Levels)
             {
@@ -133,7 +133,6 @@ namespace LanguageTrainer
 
         private void toolStripButtonWords_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(engine.CurrentDirectory);
             IsWord = true;
             IsPhrase = false;
             panelGetBy.Visible = true;
@@ -283,6 +282,12 @@ namespace LanguageTrainer
         {
             NewPhraseForm newPhraseForm = new NewPhraseForm();
             newPhraseForm.Show();            
+        }
+
+        private void newThemeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewThemeForm newThemeForm = new NewThemeForm();
+            newThemeForm.Show();
         }
     }
 }

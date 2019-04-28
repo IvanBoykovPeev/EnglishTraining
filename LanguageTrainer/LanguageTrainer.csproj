@@ -72,6 +72,12 @@
     <Compile Include="NewPhraseForm.Designer.cs">
       <DependentUpon>NewPhraseForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="NewThemeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewThemeForm.Designer.cs">
+      <DependentUpon>NewThemeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="NewWordForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,6 +94,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="NewPhraseForm.resx">
       <DependentUpon>NewPhraseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewThemeForm.resx">
+      <DependentUpon>NewThemeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NewWordForm.resx">
       <DependentUpon>NewWordForm.cs</DependentUpon>

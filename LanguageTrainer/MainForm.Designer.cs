@@ -41,6 +41,7 @@
             this.NewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.NewWordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newPhraseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newThemeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonCheck = new System.Windows.Forms.Button();
             this.labelResult = new System.Windows.Forms.Label();
             this.buttonByLevel = new System.Windows.Forms.Button();
@@ -62,10 +63,9 @@
             this.panelGetBy = new System.Windows.Forms.Panel();
             this.buttonShowAnser = new System.Windows.Forms.Button();
             this.panelMain = new System.Windows.Forms.Panel();
+            this.labelWordType = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.listBoxThemes = new System.Windows.Forms.ListBox();
-            this.newThemeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.labelWordType = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.panelGetBy.SuspendLayout();
@@ -173,6 +173,13 @@
             this.newPhraseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.newPhraseToolStripMenuItem.Text = "New Phrase";
             this.newPhraseToolStripMenuItem.Click += new System.EventHandler(this.newPhraseToolStripMenuItem_Click);
+            // 
+            // newThemeToolStripMenuItem
+            // 
+            this.newThemeToolStripMenuItem.Name = "newThemeToolStripMenuItem";
+            this.newThemeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newThemeToolStripMenuItem.Text = "New Theme";
+            this.newThemeToolStripMenuItem.Click += new System.EventHandler(this.newThemeToolStripMenuItem_Click);
             // 
             // buttonCheck
             // 
@@ -395,6 +402,14 @@
             this.panelMain.Size = new System.Drawing.Size(817, 403);
             this.panelMain.TabIndex = 24;
             // 
+            // labelWordType
+            // 
+            this.labelWordType.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.labelWordType.Location = new System.Drawing.Point(206, 162);
+            this.labelWordType.Name = "labelWordType";
+            this.labelWordType.Size = new System.Drawing.Size(181, 28);
+            this.labelWordType.TabIndex = 25;
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Location = new System.Drawing.Point(413, 221);
@@ -412,20 +427,6 @@
             this.listBoxThemes.Name = "listBoxThemes";
             this.listBoxThemes.Size = new System.Drawing.Size(253, 304);
             this.listBoxThemes.TabIndex = 25;
-            // 
-            // newThemeToolStripMenuItem
-            // 
-            this.newThemeToolStripMenuItem.Name = "newThemeToolStripMenuItem";
-            this.newThemeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.newThemeToolStripMenuItem.Text = "New Theme";
-            // 
-            // labelWordType
-            // 
-            this.labelWordType.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.labelWordType.Location = new System.Drawing.Point(206, 162);
-            this.labelWordType.Name = "labelWordType";
-            this.labelWordType.Size = new System.Drawing.Size(181, 28);
-            this.labelWordType.TabIndex = 25;
             // 
             // MainForm
             // 
