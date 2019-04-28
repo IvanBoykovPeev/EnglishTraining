@@ -22,6 +22,7 @@ namespace LanguageTrainer
         public int currentRandom;
         bool IsWord = false;
         bool IsPhrase = false;
+        private static string directory = Path.GetDirectoryName(Application.ExecutablePath);
 
         public MainForm()
         {
@@ -190,7 +191,6 @@ namespace LanguageTrainer
                 engine.GetWordByLevel(comboBoxLevels.SelectedItem.ToString());
                 currentRandom = rd.Next(engine.Words.Count());
                 textBoxEnglish.Text = engine.Words[currentRandom].EnglishWord.ToString();
-                pictureBox1.Image = new Bitmap(@"D:\EnglishTraining.git\trunk\LanguageTrainer\Pictures\teacher.jpg");
             }
             if (IsPhrase)
             {
