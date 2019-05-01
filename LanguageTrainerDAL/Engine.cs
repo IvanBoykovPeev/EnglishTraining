@@ -17,6 +17,7 @@ namespace LanguageTrainerDAL
         //"integrated security=true;database=WordBank";
         private SqlConnection connection;
         private List<Level> levels = new List<Level>();
+        private List<SubLevel> subLevels = new List<SubLevel>();
         private List<Theme> themes = new List<Theme>();
         private List<Type> types = new List<Type>();
         private List<Word> words = new List<Word>();
@@ -28,6 +29,7 @@ namespace LanguageTrainerDAL
             GetLevels();
             GetThemes();
             GetTypes();
+            
         }
 
         public void GetThemes()
@@ -49,6 +51,46 @@ namespace LanguageTrainerDAL
                         Themes.Add(theme);
                     }
                 }
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public void GetSubLevels(string level)
+        {
+            SubLevels.Clear();
+            try
+            {
+                string sqlCommand = "SELECT s.SubLevelID, s.SubLevel " +
+                                    "FROM LevelSubLevel as ls " +
+                                    "JOIN Levels as l " +
+                                    "ON ls.LevelID = l.LevelID " +
+                                    "JOIN SubLevels as s " +
+                                    "ON s.SubLevelID = ls.SubLevelID " +
+                                    "WHERE l.LevelName = @LevelName";
+                SqlCommand command = new SqlCommand(sqlCommand, connection);
+                SqlParameter sqlSubLevelParameter = new SqlParameter("@LevelName", SqlDbType.NVarChar);
+                sqlSubLevelParameter.Value = level;
+                command.Parameters.Add(sqlSubLevelParameter);
+                connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader(CommandBehavior.CloseConnection))
+                {
+                    while (reader.Read())
+                    {
+                        SubLevel subLevel = new SubLevel();
+                        subLevel.SubLevelId = reader.GetInt32(0);
+                        subLevel.SubLevelInt = reader.GetInt32(1);
+                        SubLevels.Add(subLevel);
+                    }
+                }
+                
             }
             catch (SqlException ex)
             {
@@ -189,7 +231,6 @@ namespace LanguageTrainerDAL
             }
             catch (SqlException ex)
             {
-                Console.WriteLine(ex.Message);
             }
             finally
             {
@@ -239,15 +280,16 @@ namespace LanguageTrainerDAL
             }
         }
 
-        public void InsertNewWord(string currentEnglishWord, string currentBulgarianWord, int currentLevel, int currentTheme, int currentType)
+        public void InsertNewWord(string currentEnglishWord, string currentBulgarianWord, int currentLevel, int currentTheme, int currentType, int currentSubLevel)
         {
             try
             {
-                string sqlCommand = "INSERT INTO Words(EnglishWord, BulgarianWord, LevelID, ThemeID, TypeID) VALUES (@EnglishWord, @BulgarianWord, @LevelID, @ThemeID, @TypeID)";
+                string sqlCommand = "INSERT INTO Words(EnglishWord, BulgarianWord, LevelID, ThemeID, TypeID, SubLevelID) VALUES (@EnglishWord, @BulgarianWord, @LevelID, @ThemeID, @TypeID, @SubLevelID)";
                 SqlCommand command = new SqlCommand(sqlCommand, connection);
                 SqlParameter sqlEnglishWordParameter = new SqlParameter("@EnglishWord", SqlDbType.NVarChar);
                 SqlParameter sqlBulgarianWordParameter = new SqlParameter("@BulgarianWord", SqlDbType.NVarChar);
                 SqlParameter sqlParameterLevel = new SqlParameter("@LevelID", SqlDbType.Int);
+                SqlParameter sqlParameterSubLevel = new SqlParameter("@SubLevelID", SqlDbType.Int);
                 SqlParameter sqlParameterTheme = new SqlParameter("@ThemeID", SqlDbType.Int);
                 SqlParameter sqlParameterType = new SqlParameter("@TypeID", SqlDbType.Int);
 
@@ -256,16 +298,66 @@ namespace LanguageTrainerDAL
                 sqlParameterLevel.Value = currentLevel;
                 sqlParameterTheme.Value = currentTheme;
                 sqlParameterType.Value = currentType;
+                sqlParameterSubLevel.Value = currentSubLevel;
 
                 command.Parameters.Add(sqlEnglishWordParameter);
                 command.Parameters.Add(sqlBulgarianWordParameter);
                 command.Parameters.Add(sqlParameterLevel);
                 command.Parameters.Add(sqlParameterTheme);
                 command.Parameters.Add(sqlParameterType);
+                command.Parameters.Add(sqlParameterSubLevel);
                 connection.Open();
                 if (command.ExecuteNonQuery() >= 1)
                 {
                     MessageBox.Show("Word inserted!");
+                }
+
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public void GetWordsBySubLevels(string selectedItemLevel, int selectedItemSubLevel)
+        {
+            int tempSubLevel = selectedItemSubLevel;
+            Words.Clear();
+            try
+            {
+                string sqlCommand = "" +
+                    "SELECT w.WordID, w.EnglishWord, w.BulgarianWord, t.TypeName " +
+                    "FROM Words AS w " +
+                    "JOIN Levels AS l " +
+                    "ON l.LevelID = w.LevelID " +
+                    "JOIN Types AS t " +
+                    "ON t.TypeID = w.TypeID " +
+                    "WHERE l.LevelName = @Level AND SubLevelID = @SubLevel";
+                SqlCommand command = new SqlCommand(sqlCommand, connection);
+                SqlParameter sqlThemeParameter = new SqlParameter("@Level", SqlDbType.NVarChar);
+                sqlThemeParameter.Value = selectedItemLevel;
+                command.Parameters.Add(sqlThemeParameter);
+                SqlParameter sqlSubLevelParameter = new SqlParameter("@SubLevel", SqlDbType.Int);
+                sqlSubLevelParameter.Value = tempSubLevel;
+                command.Parameters.Add(sqlSubLevelParameter);
+
+                connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader(CommandBehavior.CloseConnection))
+                {
+                    while (reader.Read())
+                    {
+                        Word word = new Word();
+                        word.Id = reader.GetInt32(0);
+                        word.EnglishWord = reader.GetString(1);
+                        word.BulgarianWord = reader.GetString(2);
+                        word.WordType = reader.GetString(3);
+                        Words.Add(word);
+                    }
                 }
 
             }
@@ -385,5 +477,6 @@ namespace LanguageTrainerDAL
         public List<Type> Types { get => types; set => types = value; }
         public List<Level> Levels { get => levels; set => levels = value; }
         public string CurrentDirectory { get => currentDirectory; set => currentDirectory = value; }
+        public List<SubLevel> SubLevels { get => subLevels; set => subLevels = value; }
     }
 }

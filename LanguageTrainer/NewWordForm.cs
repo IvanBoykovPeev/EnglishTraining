@@ -14,6 +14,7 @@ namespace LanguageTrainer
     public partial class NewWordForm : Form
     {
         public List<string> levels;
+        public List<string> subLevels;
         public List<string> themes;
         public List<string> types;
         public engine engine;
@@ -24,9 +25,10 @@ namespace LanguageTrainer
 
         private void FormInsertNew_Load(object sender, EventArgs e)
         {
-            this.levels = new List<string>();
+            this.levels = new List<string>();            
             this.themes = new List<string>();
             this.types = new List<string>();
+            this.subLevels = new List<string>();
             this.engine = new engine();
             foreach (var item in engine.Levels)
             {
@@ -57,11 +59,24 @@ namespace LanguageTrainer
         private void buttonOk_Click(object sender, EventArgs e)
         {
             Level level = engine.Levels.Find(x => x.LevelName == comboBoxLevels.SelectedItem.ToString());
+            SubLevel subLevel = engine.SubLevels.Find(x => x.SubLevelInt.ToString() == comboBoxSubLevels.SelectedItem.ToString());
             Theme theme = engine.Themes.Find(x => x.ThemeName == comboBoxThemes.SelectedItem.ToString());
             LanguageTrainerDAL.Type type = engine.Types.Find(x => x.TypeName == comboBoxTypes.SelectedItem.ToString());
-            engine.InsertNewWord(textBoxEnglish.Text, textBoxBulgarian.Text, level.LevelId, theme.ThemeId, type.TypeId);
+            engine.InsertNewWord(textBoxEnglish.Text, textBoxBulgarian.Text, level.LevelId, theme.ThemeId, type.TypeId, subLevel.SubLevelId);
             this.Close();
         }
-        
+
+        private void comboBoxLevels_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            comboBoxSubLevels.Items.Clear();
+            engine.GetSubLevels(comboBoxLevels.SelectedItem.ToString());
+            subLevels.Clear();
+            foreach (var item in engine.SubLevels)
+            {
+                this.subLevels.Add(item.SubLevelInt.ToString());
+            }
+            comboBoxSubLevels.Items.AddRange(subLevels.ToArray());
+            comboBoxSubLevels.SelectedIndex = 0;
+        }
     }
 }

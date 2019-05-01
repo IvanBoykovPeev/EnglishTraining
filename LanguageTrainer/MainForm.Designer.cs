@@ -61,8 +61,11 @@
             this.buttonByTypes = new System.Windows.Forms.Button();
             this.buttonNext = new System.Windows.Forms.Button();
             this.panelGetBy = new System.Windows.Forms.Panel();
+            this.buttonBySubLevel = new System.Windows.Forms.Button();
             this.buttonShowAnser = new System.Windows.Forms.Button();
             this.panelMain = new System.Windows.Forms.Panel();
+            this.labelSubLevel = new System.Windows.Forms.Label();
+            this.comboBoxSubLevels = new System.Windows.Forms.ComboBox();
             this.labelWordType = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.listBoxThemes = new System.Windows.Forms.ListBox();
@@ -146,7 +149,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
-            this.menuStrip1.Size = new System.Drawing.Size(1140, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(1139, 25);
             this.menuStrip1.TabIndex = 8;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -163,21 +166,21 @@
             // NewWordToolStripMenuItem
             // 
             this.NewWordToolStripMenuItem.Name = "NewWordToolStripMenuItem";
-            this.NewWordToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.NewWordToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.NewWordToolStripMenuItem.Text = "NewWord";
             this.NewWordToolStripMenuItem.Click += new System.EventHandler(this.NewWordToolStripMenuItem_Click);
             // 
             // newPhraseToolStripMenuItem
             // 
             this.newPhraseToolStripMenuItem.Name = "newPhraseToolStripMenuItem";
-            this.newPhraseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newPhraseToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.newPhraseToolStripMenuItem.Text = "New Phrase";
             this.newPhraseToolStripMenuItem.Click += new System.EventHandler(this.newPhraseToolStripMenuItem_Click);
             // 
             // newThemeToolStripMenuItem
             // 
             this.newThemeToolStripMenuItem.Name = "newThemeToolStripMenuItem";
-            this.newThemeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newThemeToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.newThemeToolStripMenuItem.Text = "New Theme";
             this.newThemeToolStripMenuItem.Click += new System.EventHandler(this.newThemeToolStripMenuItem_Click);
             // 
@@ -229,7 +232,7 @@
             // labelThemes
             // 
             this.labelThemes.AutoSize = true;
-            this.labelThemes.Location = new System.Drawing.Point(871, 126);
+            this.labelThemes.Location = new System.Drawing.Point(871, 186);
             this.labelThemes.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelThemes.Name = "labelThemes";
             this.labelThemes.Size = new System.Drawing.Size(76, 20);
@@ -262,7 +265,7 @@
             this.toolStrip1.Location = new System.Drawing.Point(0, 25);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStrip1.Size = new System.Drawing.Size(1140, 88);
+            this.toolStrip1.Size = new System.Drawing.Size(1139, 88);
             this.toolStrip1.Stretch = true;
             this.toolStrip1.TabIndex = 18;
             this.toolStrip1.Text = "toolStrip1";
@@ -325,10 +328,10 @@
             // 
             this.buttonByThemes.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonByThemes.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.buttonByThemes.Location = new System.Drawing.Point(459, 5);
+            this.buttonByThemes.Location = new System.Drawing.Point(875, 150);
             this.buttonByThemes.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonByThemes.Name = "buttonByThemes";
-            this.buttonByThemes.Size = new System.Drawing.Size(156, 35);
+            this.buttonByThemes.Size = new System.Drawing.Size(251, 35);
             this.buttonByThemes.TabIndex = 19;
             this.buttonByThemes.Text = "WORDS by Themes";
             this.buttonByThemes.UseVisualStyleBackColor = false;
@@ -360,14 +363,27 @@
             // 
             // panelGetBy
             // 
+            this.panelGetBy.Controls.Add(this.buttonBySubLevel);
             this.panelGetBy.Controls.Add(this.buttonByLevel);
-            this.panelGetBy.Controls.Add(this.buttonByThemes);
             this.panelGetBy.Controls.Add(this.buttonByTypes);
             this.panelGetBy.Location = new System.Drawing.Point(216, 142);
             this.panelGetBy.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panelGetBy.Name = "panelGetBy";
             this.panelGetBy.Size = new System.Drawing.Size(619, 43);
             this.panelGetBy.TabIndex = 22;
+            // 
+            // buttonBySubLevel
+            // 
+            this.buttonBySubLevel.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonBySubLevel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.buttonBySubLevel.Location = new System.Drawing.Point(383, 5);
+            this.buttonBySubLevel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonBySubLevel.Name = "buttonBySubLevel";
+            this.buttonBySubLevel.Size = new System.Drawing.Size(182, 35);
+            this.buttonBySubLevel.TabIndex = 21;
+            this.buttonBySubLevel.Text = "WORDS by SubLevel";
+            this.buttonBySubLevel.UseVisualStyleBackColor = false;
+            this.buttonBySubLevel.Click += new System.EventHandler(this.buttonBySubLevel_Click);
             // 
             // buttonShowAnser
             // 
@@ -382,6 +398,8 @@
             // 
             // panelMain
             // 
+            this.panelMain.Controls.Add(this.labelSubLevel);
+            this.panelMain.Controls.Add(this.comboBoxSubLevels);
             this.panelMain.Controls.Add(this.labelWordType);
             this.panelMain.Controls.Add(this.pictureBox1);
             this.panelMain.Controls.Add(this.comboBoxLevels);
@@ -401,6 +419,27 @@
             this.panelMain.Name = "panelMain";
             this.panelMain.Size = new System.Drawing.Size(817, 403);
             this.panelMain.TabIndex = 24;
+            // 
+            // labelSubLevel
+            // 
+            this.labelSubLevel.AutoSize = true;
+            this.labelSubLevel.Location = new System.Drawing.Point(579, 1);
+            this.labelSubLevel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelSubLevel.Name = "labelSubLevel";
+            this.labelSubLevel.Size = new System.Drawing.Size(75, 20);
+            this.labelSubLevel.TabIndex = 27;
+            this.labelSubLevel.Text = "SubLevel";
+            // 
+            // comboBoxSubLevels
+            // 
+            this.comboBoxSubLevels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxSubLevels.FormattingEnabled = true;
+            this.comboBoxSubLevels.Location = new System.Drawing.Point(583, 26);
+            this.comboBoxSubLevels.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.comboBoxSubLevels.Name = "comboBoxSubLevels";
+            this.comboBoxSubLevels.Size = new System.Drawing.Size(180, 28);
+            this.comboBoxSubLevels.TabIndex = 26;
+            this.comboBoxSubLevels.SelectedIndexChanged += new System.EventHandler(this.comboBoxSubLevels_SelectedIndexChanged);
             // 
             // labelWordType
             // 
@@ -423,16 +462,17 @@
             this.listBoxThemes.BackColor = System.Drawing.Color.WhiteSmoke;
             this.listBoxThemes.FormattingEnabled = true;
             this.listBoxThemes.ItemHeight = 20;
-            this.listBoxThemes.Location = new System.Drawing.Point(875, 149);
+            this.listBoxThemes.Location = new System.Drawing.Point(875, 209);
             this.listBoxThemes.Name = "listBoxThemes";
-            this.listBoxThemes.Size = new System.Drawing.Size(253, 304);
+            this.listBoxThemes.Size = new System.Drawing.Size(253, 244);
             this.listBoxThemes.TabIndex = 25;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1140, 612);
+            this.ClientSize = new System.Drawing.Size(1139, 612);
+            this.Controls.Add(this.buttonByThemes);
             this.Controls.Add(this.listBoxThemes);
             this.Controls.Add(this.panelMain);
             this.Controls.Add(this.panelGetBy);
@@ -497,5 +537,8 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ToolStripMenuItem newThemeToolStripMenuItem;
         private System.Windows.Forms.Label labelWordType;
+        private System.Windows.Forms.Button buttonBySubLevel;
+        private System.Windows.Forms.Label labelSubLevel;
+        private System.Windows.Forms.ComboBox comboBoxSubLevels;
     }
 }

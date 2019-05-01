@@ -42,6 +42,8 @@ namespace LanguageTrainer
             this.labelLevel = new System.Windows.Forms.Label();
             this.comboBoxTypes = new System.Windows.Forms.ComboBox();
             this.labelType = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.comboBoxSubLevels = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // buttonOk
@@ -107,7 +109,7 @@ namespace LanguageTrainer
             // labelTheme
             // 
             this.labelTheme.AutoSize = true;
-            this.labelTheme.Location = new System.Drawing.Point(172, 155);
+            this.labelTheme.Location = new System.Drawing.Point(172, 202);
             this.labelTheme.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.labelTheme.Name = "labelTheme";
             this.labelTheme.Size = new System.Drawing.Size(58, 20);
@@ -118,7 +120,7 @@ namespace LanguageTrainer
             // 
             this.comboBoxThemes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxThemes.FormattingEnabled = true;
-            this.comboBoxThemes.Location = new System.Drawing.Point(240, 147);
+            this.comboBoxThemes.Location = new System.Drawing.Point(240, 199);
             this.comboBoxThemes.Margin = new System.Windows.Forms.Padding(5);
             this.comboBoxThemes.Name = "comboBoxThemes";
             this.comboBoxThemes.Size = new System.Drawing.Size(267, 28);
@@ -133,6 +135,7 @@ namespace LanguageTrainer
             this.comboBoxLevels.Name = "comboBoxLevels";
             this.comboBoxLevels.Size = new System.Drawing.Size(267, 28);
             this.comboBoxLevels.TabIndex = 8;
+            this.comboBoxLevels.SelectedIndexChanged += new System.EventHandler(this.comboBoxLevels_SelectedIndexChanged);
             // 
             // labelLevel
             // 
@@ -148,7 +151,7 @@ namespace LanguageTrainer
             // 
             this.comboBoxTypes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxTypes.FormattingEnabled = true;
-            this.comboBoxTypes.Location = new System.Drawing.Point(240, 191);
+            this.comboBoxTypes.Location = new System.Drawing.Point(240, 244);
             this.comboBoxTypes.Margin = new System.Windows.Forms.Padding(5);
             this.comboBoxTypes.Name = "comboBoxTypes";
             this.comboBoxTypes.Size = new System.Drawing.Size(267, 28);
@@ -157,18 +160,40 @@ namespace LanguageTrainer
             // labelType
             // 
             this.labelType.AutoSize = true;
-            this.labelType.Location = new System.Drawing.Point(187, 199);
+            this.labelType.Location = new System.Drawing.Point(187, 247);
             this.labelType.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.labelType.Name = "labelType";
             this.labelType.Size = new System.Drawing.Size(43, 20);
             this.labelType.TabIndex = 11;
             this.labelType.Text = "Type";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(155, 155);
+            this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(75, 20);
+            this.label1.TabIndex = 12;
+            this.label1.Text = "SubLevel";
+            // 
+            // comboBoxSubLevels
+            // 
+            this.comboBoxSubLevels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxSubLevels.FormattingEnabled = true;
+            this.comboBoxSubLevels.Location = new System.Drawing.Point(240, 152);
+            this.comboBoxSubLevels.Margin = new System.Windows.Forms.Padding(5);
+            this.comboBoxSubLevels.Name = "comboBoxSubLevels";
+            this.comboBoxSubLevels.Size = new System.Drawing.Size(267, 28);
+            this.comboBoxSubLevels.TabIndex = 13;
+            // 
             // NewWordForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(521, 400);
+            this.Controls.Add(this.comboBoxSubLevels);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.labelType);
             this.Controls.Add(this.comboBoxTypes);
             this.Controls.Add(this.labelLevel);
@@ -207,6 +232,8 @@ namespace LanguageTrainer
         private System.Windows.Forms.Label labelLevel;
         private System.Windows.Forms.ComboBox comboBoxTypes;
         private System.Windows.Forms.Label labelType;
+        private Label label1;
+        private ComboBox comboBoxSubLevels;
 
         public ComboBox ComboBoxThemes { get => comboBoxThemes; set => comboBoxThemes = value; }
         public ComboBox ComboBoxLevels { get => comboBoxLevels; set => comboBoxLevels = value; }

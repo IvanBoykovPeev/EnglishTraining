@@ -16,6 +16,7 @@ namespace LanguageTrainer
     {
         public engine engine;
         public List<string> levels;
+        public List<string> subLevels;
         public List<string> themes;
         public List<string> types;
         public Random rd = new Random();
@@ -33,26 +34,39 @@ namespace LanguageTrainer
         {
             this.engine = new engine();
             this.levels = new List<string>();
+            this.subLevels = new List<string>();
+            panelGetBy.Visible = false;
+            panelMain.Hide();
+            listBoxThemes.Visible = false;
+            labelThemes.Visible = false;
+            buttonByThemes.Visible = false;
             foreach (var item in engine.Levels)
             {
                 this.levels.Add(item.LevelName);
             }
-            panelGetBy.Visible = false;
-            panelMain.Hide();
             comboBoxLevels.Items.AddRange(levels.ToArray());
             comboBoxLevels.SelectedIndex = 0;
-            listBoxThemes.Visible = false;
-            labelThemes.Visible = false;
-            
+            engine.GetSubLevels(comboBoxLevels.SelectedItem.ToString());
+            //comboBoxSubLevels.DataSource = subLevels;
         }
 
         private void comboBoxLevels_SelectedIndexChanged(object sender, EventArgs e)
         {
+            comboBoxSubLevels.Items.Clear();
             if (comboBoxLevels.SelectedItem != null)
             {
-                engine.GetWordByLevel(comboBoxLevels.SelectedItem.ToString());
-            }
+            engine.GetWordByLevel(comboBoxLevels.SelectedItem.ToString());
             currentRandom = rd.Next(engine.Words.Count());
+            }
+
+            engine.GetSubLevels(comboBoxLevels.SelectedItem.ToString());
+            subLevels.Clear();
+            foreach (var item in engine.SubLevels)
+            {
+                this.subLevels.Add(item.SubLevelInt.ToString());
+            }
+            comboBoxSubLevels.Items.AddRange(subLevels.ToArray());
+            comboBoxSubLevels.SelectedIndex = 0;
         }
 
         private void buttonStart_Click(object sender, EventArgs e)
@@ -150,6 +164,9 @@ namespace LanguageTrainer
             textBoxGuess.Clear();
             labelResult.Text = "";
             labelResult.BackColor = SystemColors.Control;
+            
+            
+
             this.themes = new List<string>();
             foreach (var item in engine.Themes)
             {
@@ -288,6 +305,47 @@ namespace LanguageTrainer
         {
             NewThemeForm newThemeForm = new NewThemeForm();
             newThemeForm.Show();
+        }
+
+        private void buttonBySubLevel_Click(object sender, EventArgs e)
+        {
+            SubLevel subLevel = engine.SubLevels.Find(x => x.SubLevelInt.ToString() == comboBoxSubLevels.SelectedItem.ToString());
+            textBoxEnglish.Clear();
+            textBoxGuess.Clear();
+            labelResult.Text = "";
+            labelResult.BackColor = SystemColors.Control;
+            if (IsWord)
+            {
+
+                engine.GetWordsBySubLevels(comboBoxLevels.SelectedItem.ToString(), subLevel.SubLevelId);
+                currentRandom = rd.Next(engine.Words.Count());
+                if (engine.Words.Count > 0)
+                {
+                    textBoxEnglish.Text = engine.Words[currentRandom].EnglishWord.ToString();
+                    labelWordType.Text = engine.Words[currentRandom].WordType.ToString();
+                    textBoxGuess.Focus();
+                }
+                else
+                {
+                    MessageBox.Show("There isn't words in this sub level!");
+                }
+
+
+            }
+            if (IsPhrase)
+            {
+                textBoxEnglish.Clear();
+                textBoxGuess.Clear();
+                textBoxGuess.Focus();
+                engine.GetPhrases(comboBoxLevels.SelectedItem.ToString());
+                currentRandom = rd.Next(engine.Phrases.Count());
+                textBoxEnglish.Text = engine.Phrases[currentRandom].EnglishPhrase.ToString();
+            }
+        }
+
+        private void comboBoxSubLevels_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
