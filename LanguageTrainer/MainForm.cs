@@ -115,7 +115,7 @@ namespace LanguageTrainer
 
         private void buttonCheck_Click(object sender, EventArgs e)
         {
-            if (engine.Words[currentRandom].BulgarianWord.ToString() == textBoxGuess.Text)
+            if (engine.Words[currentRandom].BulgarianWord.ToString().Contains(textBoxGuess.Text))
             {
                 labelResult.Text = "TRUE";
                 labelResult.BackColor = Color.LightGreen;
