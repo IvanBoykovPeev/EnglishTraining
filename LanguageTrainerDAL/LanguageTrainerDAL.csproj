@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Engine.cs" />
+    <Compile Include="IrregularVerb.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Phrase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.labelEnglish = new System.Windows.Forms.Label();
             this.textBoxEnglish = new System.Windows.Forms.TextBox();
             this.labelGuess = new System.Windows.Forms.Label();
@@ -53,7 +52,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -64,11 +63,16 @@
             this.buttonBySubLevel = new System.Windows.Forms.Button();
             this.buttonShowAnser = new System.Windows.Forms.Button();
             this.panelMain = new System.Windows.Forms.Panel();
+            this.labelGuessVerb = new System.Windows.Forms.Label();
+            this.labelVerbPastSimple = new System.Windows.Forms.Label();
+            this.textBoxGuessPastSimple = new System.Windows.Forms.TextBox();
+            this.textBoxPastSimple = new System.Windows.Forms.TextBox();
             this.labelSubLevel = new System.Windows.Forms.Label();
             this.comboBoxSubLevels = new System.Windows.Forms.ComboBox();
             this.labelWordType = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.listBoxThemes = new System.Windows.Forms.ListBox();
+            this.newIrregularVerbToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.panelGetBy.SuspendLayout();
@@ -158,7 +162,8 @@
             this.NewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.NewWordToolStripMenuItem,
             this.newPhraseToolStripMenuItem,
-            this.newThemeToolStripMenuItem});
+            this.newThemeToolStripMenuItem,
+            this.newIrregularVerbToolStripMenuItem});
             this.NewToolStripMenuItem.Name = "NewToolStripMenuItem";
             this.NewToolStripMenuItem.Size = new System.Drawing.Size(45, 19);
             this.NewToolStripMenuItem.Text = "NEW";
@@ -166,8 +171,8 @@
             // NewWordToolStripMenuItem
             // 
             this.NewWordToolStripMenuItem.Name = "NewWordToolStripMenuItem";
-            this.NewWordToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
-            this.NewWordToolStripMenuItem.Text = "NewWord";
+            this.NewWordToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.NewWordToolStripMenuItem.Text = "New Word";
             this.NewWordToolStripMenuItem.Click += new System.EventHandler(this.NewWordToolStripMenuItem_Click);
             // 
             // newPhraseToolStripMenuItem
@@ -186,7 +191,7 @@
             // 
             // buttonCheck
             // 
-            this.buttonCheck.Location = new System.Drawing.Point(43, 162);
+            this.buttonCheck.Location = new System.Drawing.Point(657, 122);
             this.buttonCheck.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonCheck.Name = "buttonCheck";
             this.buttonCheck.Size = new System.Drawing.Size(156, 28);
@@ -268,16 +273,15 @@
             this.toolStrip1.Size = new System.Drawing.Size(1139, 88);
             this.toolStrip1.Stretch = true;
             this.toolStrip1.TabIndex = 18;
-            this.toolStrip1.Text = "toolStrip1";
+            this.toolStrip1.Text = "IRREGULAR VERBS";
             // 
             // toolStripButtonWords
             // 
-            this.toolStripButtonWords.AutoSize = false;
             this.toolStripButtonWords.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.toolStripButtonWords.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButtonWords.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonWords.Name = "toolStripButtonWords";
-            this.toolStripButtonWords.Size = new System.Drawing.Size(60, 54);
+            this.toolStripButtonWords.Size = new System.Drawing.Size(52, 85);
             this.toolStripButtonWords.Text = "WORDS";
             this.toolStripButtonWords.Click += new System.EventHandler(this.toolStripButtonWords_Click);
             // 
@@ -289,7 +293,6 @@
             // toolStripButton2
             // 
             this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
             this.toolStripButton2.Size = new System.Drawing.Size(60, 85);
@@ -304,9 +307,11 @@
             // toolStripLabel1
             // 
             this.toolStripLabel1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripLabel1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(103, 85);
+            this.toolStripLabel1.Size = new System.Drawing.Size(107, 85);
             this.toolStripLabel1.Text = "IRREGULAR VERBS";
+            this.toolStripLabel1.Click += new System.EventHandler(this.ToolStripLabel1_Click);
             // 
             // toolStripSeparator3
             // 
@@ -352,7 +357,7 @@
             // 
             // buttonNext
             // 
-            this.buttonNext.Location = new System.Drawing.Point(657, 162);
+            this.buttonNext.Location = new System.Drawing.Point(657, 160);
             this.buttonNext.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonNext.Name = "buttonNext";
             this.buttonNext.Size = new System.Drawing.Size(156, 28);
@@ -387,7 +392,7 @@
             // 
             // buttonShowAnser
             // 
-            this.buttonShowAnser.Location = new System.Drawing.Point(657, 122);
+            this.buttonShowAnser.Location = new System.Drawing.Point(657, 198);
             this.buttonShowAnser.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonShowAnser.Name = "buttonShowAnser";
             this.buttonShowAnser.Size = new System.Drawing.Size(156, 28);
@@ -398,6 +403,10 @@
             // 
             // panelMain
             // 
+            this.panelMain.Controls.Add(this.labelGuessVerb);
+            this.panelMain.Controls.Add(this.labelVerbPastSimple);
+            this.panelMain.Controls.Add(this.textBoxGuessPastSimple);
+            this.panelMain.Controls.Add(this.textBoxPastSimple);
             this.panelMain.Controls.Add(this.labelSubLevel);
             this.panelMain.Controls.Add(this.comboBoxSubLevels);
             this.panelMain.Controls.Add(this.labelWordType);
@@ -419,6 +428,44 @@
             this.panelMain.Name = "panelMain";
             this.panelMain.Size = new System.Drawing.Size(817, 403);
             this.panelMain.TabIndex = 24;
+            // 
+            // labelGuessVerb
+            // 
+            this.labelGuessVerb.Location = new System.Drawing.Point(9, 202);
+            this.labelGuessVerb.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelGuessVerb.Name = "labelGuessVerb";
+            this.labelGuessVerb.Size = new System.Drawing.Size(191, 20);
+            this.labelGuessVerb.TabIndex = 31;
+            this.labelGuessVerb.Text = "Guess Verb";
+            this.labelGuessVerb.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // labelVerbPastSimple
+            // 
+            this.labelVerbPastSimple.Location = new System.Drawing.Point(9, 164);
+            this.labelVerbPastSimple.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelVerbPastSimple.Name = "labelVerbPastSimple";
+            this.labelVerbPastSimple.Size = new System.Drawing.Size(191, 20);
+            this.labelVerbPastSimple.TabIndex = 30;
+            this.labelVerbPastSimple.Text = "Past Simple";
+            this.labelVerbPastSimple.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // textBoxGuessPastSimple
+            // 
+            this.textBoxGuessPastSimple.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxGuessPastSimple.Location = new System.Drawing.Point(207, 200);
+            this.textBoxGuessPastSimple.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.textBoxGuessPastSimple.Name = "textBoxGuessPastSimple";
+            this.textBoxGuessPastSimple.Size = new System.Drawing.Size(442, 26);
+            this.textBoxGuessPastSimple.TabIndex = 29;
+            // 
+            // textBoxPastSimple
+            // 
+            this.textBoxPastSimple.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxPastSimple.Location = new System.Drawing.Point(207, 162);
+            this.textBoxPastSimple.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.textBoxPastSimple.Name = "textBoxPastSimple";
+            this.textBoxPastSimple.Size = new System.Drawing.Size(442, 26);
+            this.textBoxPastSimple.TabIndex = 28;
             // 
             // labelSubLevel
             // 
@@ -444,14 +491,15 @@
             // labelWordType
             // 
             this.labelWordType.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.labelWordType.Location = new System.Drawing.Point(206, 162);
+            this.labelWordType.Location = new System.Drawing.Point(44, 26);
             this.labelWordType.Name = "labelWordType";
-            this.labelWordType.Size = new System.Drawing.Size(181, 28);
+            this.labelWordType.Size = new System.Drawing.Size(156, 28);
             this.labelWordType.TabIndex = 25;
+            this.labelWordType.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(413, 221);
+            this.pictureBox1.Location = new System.Drawing.Point(657, 234);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(150, 150);
             this.pictureBox1.TabIndex = 24;
@@ -466,6 +514,13 @@
             this.listBoxThemes.Name = "listBoxThemes";
             this.listBoxThemes.Size = new System.Drawing.Size(253, 244);
             this.listBoxThemes.TabIndex = 25;
+            // 
+            // newIrregularVerbToolStripMenuItem
+            // 
+            this.newIrregularVerbToolStripMenuItem.Name = "newIrregularVerbToolStripMenuItem";
+            this.newIrregularVerbToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newIrregularVerbToolStripMenuItem.Text = "New Irregular Verb";
+            this.newIrregularVerbToolStripMenuItem.Click += new System.EventHandler(this.NewIrregularVerbToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -520,7 +575,6 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButtonWords;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
@@ -540,5 +594,11 @@
         private System.Windows.Forms.Button buttonBySubLevel;
         private System.Windows.Forms.Label labelSubLevel;
         private System.Windows.Forms.ComboBox comboBoxSubLevels;
+        private System.Windows.Forms.ToolStripButton toolStripLabel1;
+        private System.Windows.Forms.Label labelGuessVerb;
+        private System.Windows.Forms.Label labelVerbPastSimple;
+        private System.Windows.Forms.TextBox textBoxGuessPastSimple;
+        private System.Windows.Forms.TextBox textBoxPastSimple;
+        private System.Windows.Forms.ToolStripMenuItem newIrregularVerbToolStripMenuItem;
     }
 }

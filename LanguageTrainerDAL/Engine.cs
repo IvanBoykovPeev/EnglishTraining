@@ -22,6 +22,7 @@ namespace LanguageTrainerDAL
         private List<Type> types = new List<Type>();
         private List<Word> words = new List<Word>();
         private List<Phrase> phrases = new List<Phrase>();
+        private List<IrregularVerb> irregularVerbs = new List<IrregularVerb>();
 
         public engine()
         {
@@ -30,6 +31,42 @@ namespace LanguageTrainerDAL
             GetThemes();
             GetTypes();
             
+        }
+
+        public void InsertNewIrregularVerb(string baseForm, string pastSimple, string bulgarianVerb, int levelId)
+        {
+            try
+            {
+                string sqlCommand = "INSERT INTO IrregularVerbs(BaseForm, PastSimple, BulgarianVerb, LevelId) VALUES (@BaseForm, @PastSimple, @BulgarianVerb, @LevelId)";
+                SqlCommand command = new SqlCommand(sqlCommand, connection);
+                SqlParameter sqlBaseFormParameter = new SqlParameter("@BaseForm", SqlDbType.NVarChar);
+                SqlParameter sqlPastSimpleParameter = new SqlParameter("@PastSimple", SqlDbType.NVarChar);
+                SqlParameter sqlBulgarianVerbParameter = new SqlParameter("@BulgarianVerb", SqlDbType.NVarChar);
+                SqlParameter sqlParameterLevel = new SqlParameter("@LevelId", SqlDbType.Int);
+
+                sqlBaseFormParameter.Value = baseForm;
+                sqlPastSimpleParameter.Value = pastSimple;
+                sqlBulgarianVerbParameter.Value = bulgarianVerb;
+                sqlParameterLevel.Value = levelId;
+
+                command.Parameters.Add(sqlBaseFormParameter);
+                command.Parameters.Add(sqlPastSimpleParameter);
+                command.Parameters.Add(sqlBulgarianVerbParameter);
+                command.Parameters.Add(sqlParameterLevel);
+                connection.Open();
+                if (command.ExecuteNonQuery() >= 1)
+                {
+                    MessageBox.Show("Verb inserted!");
+                }
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
 
         public void GetThemes()
@@ -371,6 +408,48 @@ namespace LanguageTrainerDAL
             }
         }
 
+        public void GetIrregularVerbs(string currentlevel)
+        {
+            IrregularVerbs.Clear();
+            try
+            {
+                string sqlCommand = "" +
+                    "SELECT iv.VerbId, iv.BaseForm, iv.BulgarianVerb, iv.PastSimple " +
+                    "FROM IrregularVerbs AS iv " + 
+                    "JOIN Levels AS l " + 
+                    "ON iv.LevelId = l.LevelID " +
+                    "WHERE l.LevelName = @Level";
+                SqlCommand command = new SqlCommand(sqlCommand, connection);
+                SqlParameter sqlThemeParameter = new SqlParameter("@Level", SqlDbType.NVarChar);
+                sqlThemeParameter.Value = currentlevel;
+                command.Parameters.Add(sqlThemeParameter);
+
+                connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader(CommandBehavior.CloseConnection))
+                {
+                    while (reader.Read())
+                    {
+                        IrregularVerb irregularVerbs = new IrregularVerb();
+                        irregularVerbs.Id = reader.GetInt32(0);
+                        irregularVerbs.VerbBaseForm = reader.GetString(1);
+                        irregularVerbs.BulgarianVerb = reader.GetString(2);
+                        irregularVerbs.VerbPastSimple = reader.GetString(3);
+                        IrregularVerbs.Add(irregularVerbs);
+                    }
+                }
+
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
         public void InsertNewPhrase(string currentEnglishPhrase, string currentBulgarianPhrase, int currentLevelId)
         {
             try
@@ -478,5 +557,6 @@ namespace LanguageTrainerDAL
         public List<Level> Levels { get => levels; set => levels = value; }
         public string CurrentDirectory { get => currentDirectory; set => currentDirectory = value; }
         public List<SubLevel> SubLevels { get => subLevels; set => subLevels = value; }
+        public List<IrregularVerb> IrregularVerbs { get => irregularVerbs; set => irregularVerbs = value; }
     }
 }

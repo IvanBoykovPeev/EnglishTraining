@@ -66,6 +66,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NewIrregularVerbForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewIrregularVerbForm.Designer.cs">
+      <DependentUpon>NewIrregularVerbForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="NewPhraseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -92,6 +98,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="NewIrregularVerbForm.resx">
+      <DependentUpon>NewIrregularVerbForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="NewPhraseForm.resx">
       <DependentUpon>NewPhraseForm.cs</DependentUpon>
     </EmbeddedResource>

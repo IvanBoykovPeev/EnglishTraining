@@ -23,6 +23,7 @@ namespace LanguageTrainer
         public int currentRandom;
         bool IsWord = false;
         bool IsPhrase = false;
+        bool IsIrregularVerb = false;
         private static string directory = Path.GetDirectoryName(Application.ExecutablePath);
 
         public MainForm()
@@ -110,22 +111,47 @@ namespace LanguageTrainer
                 textBoxEnglish.Text = engine.Phrases[currentRandom].EnglishPhrase.ToString();
                 textBoxGuess.Focus();
             }
-            
+            if (IsIrregularVerb)
+            {
+                currentRandom = rd.Next(engine.IrregularVerbs.Count());
+                textBoxEnglish.Text = engine.IrregularVerbs[currentRandom].VerbBaseForm.ToString();
+                textBoxGuess.Focus();
+            }
         }
 
         private void buttonCheck_Click(object sender, EventArgs e)
         {
-            if (engine.Words[currentRandom].BulgarianWord.ToString().Contains(textBoxGuess.Text))
+            if (IsWord)
             {
-                labelResult.Text = "TRUE";
-                labelResult.BackColor = Color.LightGreen;
+                if (engine.Words[currentRandom].BulgarianWord.ToString().Contains(textBoxGuess.Text) &&
+                    textBoxGuess.Text != "")
+                {
+                    labelResult.Text = "TRUE";
+                    labelResult.BackColor = Color.LightGreen;
+                }
+                else
+                {
+                    labelResult.Text = "FALSE";
+                    labelResult.BackColor = Color.OrangeRed;
+                    textBoxGuess.Focus();
+                }
             }
-            else
+            if (IsIrregularVerb && textBoxEnglish.Text != "")
             {
-                labelResult.Text = "FALSE";
-                labelResult.BackColor = Color.OrangeRed;
-                textBoxGuess.Focus();
+                if (engine.IrregularVerbs[currentRandom].VerbPastSimple.ToString().Contains(textBoxGuess.Text) && 
+                    textBoxGuess.Text != "")
+                {
+                    labelResult.Text = "TRUE";
+                    labelResult.BackColor = Color.LightGreen;
+                }
+                else
+                {
+                    labelResult.Text = "FALSE";
+                    labelResult.BackColor = Color.OrangeRed;
+                    textBoxGuess.Focus();
+                }
             }
+
         }
 
         private void buttonAnser_Click(object sender, EventArgs e)
@@ -143,18 +169,27 @@ namespace LanguageTrainer
                 labelResult.Text = "TRUE";
                 labelResult.BackColor = Color.LightGreen;
             }
+            if (IsIrregularVerb)
+            {
+                textBoxGuess.Text = engine.IrregularVerbs[currentRandom].VerbPastSimple.ToString();
+                labelResult.Text = "TRUE";
+                labelResult.BackColor = Color.LightGreen;
+            }
         }
 
         private void toolStripButtonWords_Click(object sender, EventArgs e)
         {
             IsWord = true;
             IsPhrase = false;
+            IsIrregularVerb = false;
             panelGetBy.Visible = true;
             panelMain.Show();
             buttonByLevel.Text = "WORDS by Level";
             buttonByThemes.Text = "WORDS by Themes";
             labelEnglish.Text = "English Word";
             labelGuess.Text = "Guess Word";
+            labelGuessVerb.Hide();
+            labelVerbPastSimple.Hide();
             buttonByTypes.Show();
             comboBoxTypes.Show();
             buttonByThemes.Show();
@@ -162,6 +197,8 @@ namespace LanguageTrainer
             labelTypes.Show();
             textBoxEnglish.Clear();
             textBoxGuess.Clear();
+            textBoxPastSimple.Hide();
+            textBoxGuessPastSimple.Hide();
             labelResult.Text = "";
             labelResult.BackColor = SystemColors.Control;
             
@@ -186,8 +223,9 @@ namespace LanguageTrainer
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            IsWord = false;
             IsPhrase = true;
+            IsWord = false;
+            IsIrregularVerb = false;
             panelGetBy.Visible = true;
             listBoxThemes.Visible = false;
             panelMain.Show();
@@ -236,6 +274,22 @@ namespace LanguageTrainer
                 engine.GetPhrases(comboBoxLevels.SelectedItem.ToString());
                 currentRandom = rd.Next(engine.Phrases.Count());
                 textBoxEnglish.Text = engine.Phrases[currentRandom].EnglishPhrase.ToString();
+            }
+            if (IsIrregularVerb)
+            {
+                engine.GetIrregularVerbs(comboBoxLevels.SelectedItem.ToString());
+
+                currentRandom = rd.Next(engine.IrregularVerbs.Count());
+                if (engine.IrregularVerbs.Count > 0)
+                {
+                    textBoxEnglish.Text = engine.IrregularVerbs[currentRandom].VerbBaseForm.ToString();
+
+                    textBoxGuess.Focus();
+                }
+                else
+                {
+                    MessageBox.Show("There isn't verbs in this level!");
+                }
             }
         }
 
@@ -346,6 +400,44 @@ namespace LanguageTrainer
         private void comboBoxSubLevels_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void ToolStripLabel1_Click(object sender, EventArgs e)
+        {
+            IsIrregularVerb = true;
+            IsWord = false;
+            IsPhrase = false;
+            panelGetBy.Visible = true;
+            listBoxThemes.Visible = false;
+            panelMain.Show();
+            buttonByLevel.Text = "VERBS by Level";
+            buttonBySubLevel.Hide();
+            labelSubLevel.Hide();
+            comboBoxSubLevels.Hide();
+            buttonByThemes.Hide();
+            labelThemes.Hide();
+            labelEnglish.Text = "English Base Form";
+            labelGuess.Text = "Guess Past Simple";
+            labelTypes.Hide();
+            labelWordType.Hide();
+            labelVerbPastSimple.Show();
+            labelGuessVerb.Show();
+            buttonByTypes.Hide();
+            comboBoxTypes.Hide();
+            textBoxEnglish.Clear();
+            textBoxGuess.Clear();
+            textBoxPastSimple.Show();
+            textBoxGuessPastSimple.Show();
+            labelResult.Text = "";
+            labelResult.BackColor = SystemColors.Control;
+
+            
+        }
+
+        private void NewIrregularVerbToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewIrregularVerbForm newIrregularForm = new NewIrregularVerbForm();
+            newIrregularForm.Show();
         }
     }
 }
