@@ -7,11 +7,14 @@ using System.IO;
 
 namespace LanguageTrainerDAL
 {
-    public class engine
+    public class Engine
     {
+        //after build
         private static string directory = Path.GetDirectoryName(Application.ExecutablePath) + "\\DatabaseWordBank.mdf";
+
         private static string currentDirectory = @"D:\EnglishTraining.git\trunk\LanguageTrainer\DatabaseWordBank.mdf";
-        private string connectionString = @"server=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + currentDirectory + ";Integrated Security = True";       
+        private string connectionString = @"server=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" 
+                                        + currentDirectory + ";Integrated Security = True";       
 
         //@"server=.;" +
         //"integrated security=true;database=WordBank";
@@ -24,33 +27,37 @@ namespace LanguageTrainerDAL
         private List<Phrase> phrases = new List<Phrase>();
         private List<IrregularVerb> irregularVerbs = new List<IrregularVerb>();
 
-        public engine()
+        public Engine()
         {
             connection = new SqlConnection(connectionString);
             GetLevels();
             GetThemes();
             GetTypes();
-            
         }
 
-        public void InsertNewIrregularVerb(string baseForm, string pastSimple, string bulgarianVerb, int levelId)
+        public void InsertNewIrregularVerb(string baseForm, string pastSimple, string pastParticiple,
+            string bulgarianVerb, int levelId)
         {
             try
             {
-                string sqlCommand = "INSERT INTO IrregularVerbs(BaseForm, PastSimple, BulgarianVerb, LevelId) VALUES (@BaseForm, @PastSimple, @BulgarianVerb, @LevelId)";
+                string sqlCommand = "INSERT INTO IrregularVerbs(BaseForm, PastSimple, BulgarianVerb, LevelId, " +
+                    "PastParticiple) VALUES (@BaseForm, @PastSimple, @BulgarianVerb, @LevelId, @PastParticiple)";
                 SqlCommand command = new SqlCommand(sqlCommand, connection);
                 SqlParameter sqlBaseFormParameter = new SqlParameter("@BaseForm", SqlDbType.NVarChar);
                 SqlParameter sqlPastSimpleParameter = new SqlParameter("@PastSimple", SqlDbType.NVarChar);
+                SqlParameter sqlPastParticipleParameter = new SqlParameter("@PastParticiple", SqlDbType.NVarChar);
                 SqlParameter sqlBulgarianVerbParameter = new SqlParameter("@BulgarianVerb", SqlDbType.NVarChar);
                 SqlParameter sqlParameterLevel = new SqlParameter("@LevelId", SqlDbType.Int);
 
                 sqlBaseFormParameter.Value = baseForm;
                 sqlPastSimpleParameter.Value = pastSimple;
+                sqlPastParticipleParameter.Value = pastParticiple;
                 sqlBulgarianVerbParameter.Value = bulgarianVerb;
                 sqlParameterLevel.Value = levelId;
 
                 command.Parameters.Add(sqlBaseFormParameter);
                 command.Parameters.Add(sqlPastSimpleParameter);
+                command.Parameters.Add(sqlPastParticipleParameter);
                 command.Parameters.Add(sqlBulgarianVerbParameter);
                 command.Parameters.Add(sqlParameterLevel);
                 connection.Open();
@@ -62,6 +69,126 @@ namespace LanguageTrainerDAL
             catch (SqlException ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public void DeleteWord(int id)
+        {
+            try
+            {
+                string sqlCommand = "DELETE FROM Words " +
+                    "WHERE WordID = @Id; ";
+                SqlCommand command = new SqlCommand(sqlCommand, connection);
+
+                SqlParameter sqlParameterId = new SqlParameter("@Id", SqlDbType.Int);
+
+                sqlParameterId.Value = id;
+
+                command.Parameters.Add(sqlParameterId);
+
+                connection.Open();
+                if (command.ExecuteNonQuery() >= 1)
+                {
+                    MessageBox.Show("Word deleted!");
+                }
+
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public void EditWord(int id, string textEnglish, string textBulgarian)
+        {
+            try
+            {
+                string sqlCommand = "UPDATE Words " +
+                    "SET BulgarianWord = @TextBulgarian, EnglishWord = @TextEnglish " +
+                    "WHERE WordID = @Id; ";
+                SqlCommand command = new SqlCommand(sqlCommand, connection);
+
+                SqlParameter sqlParameterId = new SqlParameter("@Id", SqlDbType.Int);
+                SqlParameter sqlParameterTextBulgarian = new SqlParameter("@TextBulgarian", SqlDbType.NVarChar);
+                SqlParameter sqlParameterTextEnglish = new SqlParameter("@TextEnglish", SqlDbType.NVarChar);
+
+                sqlParameterId.Value = id;
+                sqlParameterTextBulgarian.Value = textBulgarian;
+                sqlParameterTextEnglish.Value = textEnglish;
+
+                command.Parameters.Add(sqlParameterId);
+                command.Parameters.Add(sqlParameterTextBulgarian);
+                command.Parameters.Add(sqlParameterTextEnglish);
+
+                connection.Open();
+                if (command.ExecuteNonQuery() >= 1)
+                {
+                    MessageBox.Show("Word updated!");
+                }
+
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public void InsertNewWordWithImage(string currentEnglishWord, string currentBulgarianWord, 
+            int currentLevel, int currentTheme, int currentType, int currentSubLevel, 
+            byte[] bytes, string contentType)
+        {
+            try
+            {
+                string sqlCommand = "INSERT INTO Words(EnglishWord, BulgarianWord, LevelID, ThemeID, TypeID, SubLevelID, Pic, ContentType) VALUES (@EnglishWord, @BulgarianWord, @LevelID, @ThemeID, @TypeID, @SubLevelID, @Pic, @ContentType)";
+                SqlCommand command = new SqlCommand(sqlCommand, connection);
+                SqlParameter sqlEnglishWordParameter = new SqlParameter("@EnglishWord", SqlDbType.NVarChar);
+                SqlParameter sqlBulgarianWordParameter = new SqlParameter("@BulgarianWord", SqlDbType.NVarChar);
+                SqlParameter sqlParameterLevel = new SqlParameter("@LevelID", SqlDbType.Int);
+                SqlParameter sqlParameterSubLevel = new SqlParameter("@SubLevelID", SqlDbType.Int);
+                SqlParameter sqlParameterTheme = new SqlParameter("@ThemeID", SqlDbType.Int);
+                SqlParameter sqlParameterType = new SqlParameter("@TypeID", SqlDbType.Int);
+                SqlParameter sqlParameterPic = new SqlParameter("@Pic", SqlDbType.VarBinary);
+                SqlParameter sqlParameterContentType = new SqlParameter("@ContentType", SqlDbType.NVarChar);
+
+                sqlEnglishWordParameter.Value = currentEnglishWord;
+                sqlBulgarianWordParameter.Value = currentBulgarianWord;
+                sqlParameterLevel.Value = currentLevel;
+                sqlParameterTheme.Value = currentTheme;
+                sqlParameterType.Value = currentType;
+                sqlParameterSubLevel.Value = currentSubLevel;
+                sqlParameterPic.Value = bytes;
+                sqlParameterContentType.Value = contentType;
+
+                command.Parameters.Add(sqlEnglishWordParameter);
+                command.Parameters.Add(sqlBulgarianWordParameter);
+                command.Parameters.Add(sqlParameterLevel);
+                command.Parameters.Add(sqlParameterTheme);
+                command.Parameters.Add(sqlParameterType);
+                command.Parameters.Add(sqlParameterSubLevel);
+                command.Parameters.Add(sqlParameterPic);
+                command.Parameters.Add(sqlParameterContentType);
+                connection.Open();
+                if (command.ExecuteNonQuery() >= 1)
+                {
+                    MessageBox.Show("Word inserted!");
+                }
+
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.Message + ex.Errors + "engine");
             }
             finally
             {
@@ -161,6 +288,7 @@ namespace LanguageTrainerDAL
             }
             catch (SqlException ex)
             {
+                MessageBox.Show(ex.Message);
             }
             finally
             {
@@ -238,7 +366,7 @@ namespace LanguageTrainerDAL
             try
             {
                 string sqlCommand = "" +
-                    "SELECT w.WordID, w.EnglishWord, w.BulgarianWord, t.TypeName " +
+                    "SELECT w.WordID, w.EnglishWord, w.BulgarianWord, t.TypeName, w.Pic " +
                     "FROM Words AS w " +
                     "JOIN Levels AS l " +
                     "ON l.LevelID = w.LevelID " +
@@ -261,6 +389,10 @@ namespace LanguageTrainerDAL
                         word.EnglishWord = reader.GetString(1);
                         word.BulgarianWord = reader.GetString(2);
                         word.WordType = reader.GetString(3);
+                        if (!reader.IsDBNull(4))
+                        {
+                            word.WordPic = (byte[])reader.GetValue(4);
+                        }
                         Words.Add(word);
                     }
                 }
@@ -310,6 +442,7 @@ namespace LanguageTrainerDAL
             }
             catch (SqlException ex)
             {
+                MessageBox.Show(ex.Message);
             }
             finally
             {
@@ -358,6 +491,46 @@ namespace LanguageTrainerDAL
             {
                 connection.Close();
             }
+        }
+
+        public List<Word> SearchWord(string searchWord)
+        {
+            List<Word> serchWord = new List<Word>();
+            try
+            {
+                string sqlCommand = "SELECT WordID, EnglishWord, BulgarianWord " +
+                    "FROM Words " +
+                    "WHERE EnglishWord = @SearchText";
+
+                SqlCommand command = new SqlCommand(sqlCommand, connection);
+                SqlParameter sqlThemeParameter = new SqlParameter("@SearchText", SqlDbType.NVarChar);
+                sqlThemeParameter.Value = searchWord;
+                command.Parameters.Add(sqlThemeParameter);
+                int result = 0;
+                connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader(CommandBehavior.CloseConnection))
+                {
+                    while (reader.Read())
+                    {
+                        Word tempWord = new Word();
+                        tempWord.Id = reader.GetInt32(0);
+                        tempWord.EnglishWord = reader.GetString(1);
+                        tempWord.BulgarianWord = reader.GetString(2);
+                        serchWord.Add(tempWord);
+                        result++;
+                    }
+                }
+            }
+            catch(SqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return serchWord;
         }
 
         public void GetWordsBySubLevels(string selectedItemLevel, int selectedItemSubLevel)
@@ -414,7 +587,7 @@ namespace LanguageTrainerDAL
             try
             {
                 string sqlCommand = "" +
-                    "SELECT iv.VerbId, iv.BaseForm, iv.BulgarianVerb, iv.PastSimple " +
+                    "SELECT iv.VerbId, iv.BaseForm, iv.BulgarianVerb, iv.PastSimple, iv.PastParticiple " +
                     "FROM IrregularVerbs AS iv " + 
                     "JOIN Levels AS l " + 
                     "ON iv.LevelId = l.LevelID " +
@@ -435,6 +608,10 @@ namespace LanguageTrainerDAL
                         irregularVerbs.VerbBaseForm = reader.GetString(1);
                         irregularVerbs.BulgarianVerb = reader.GetString(2);
                         irregularVerbs.VerbPastSimple = reader.GetString(3);
+                        if (!reader.IsDBNull(4))
+                        {
+                        irregularVerbs.VerbPastParticiple = reader.GetString(4);
+                        }
                         IrregularVerbs.Add(irregularVerbs);
                     }
                 }
@@ -548,6 +725,8 @@ namespace LanguageTrainerDAL
                 connection.Close();
             }
         }
+
+        
 
         public SqlConnection Connection { get => connection; set => connection = value; }
         public List<Theme> Themes { get => themes; set => themes = value; }

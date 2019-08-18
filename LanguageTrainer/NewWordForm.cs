@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,10 @@ namespace LanguageTrainer
         public List<string> subLevels;
         public List<string> themes;
         public List<string> types;
-        public engine engine;
+        public Engine engine;
+        string fileName;
+        byte[] bytes;
+        string contentType;
         public NewWordForm()
         {
             InitializeComponent();
@@ -29,7 +33,7 @@ namespace LanguageTrainer
             this.themes = new List<string>();
             this.types = new List<string>();
             this.subLevels = new List<string>();
-            this.engine = new engine();
+            this.engine = new Engine();
             foreach (var item in engine.Levels)
             {
                 this.levels.Add(item.LevelName);
@@ -62,7 +66,15 @@ namespace LanguageTrainer
             SubLevel subLevel = engine.SubLevels.Find(x => x.SubLevelInt.ToString() == comboBoxSubLevels.SelectedItem.ToString());
             Theme theme = engine.Themes.Find(x => x.ThemeName == comboBoxThemes.SelectedItem.ToString());
             LanguageTrainerDAL.Type type = engine.Types.Find(x => x.TypeName == comboBoxTypes.SelectedItem.ToString());
-            engine.InsertNewWord(textBoxEnglish.Text, textBoxBulgarian.Text, level.LevelId, theme.ThemeId, type.TypeId, subLevel.SubLevelId);
+            if (bytes == null)
+            {
+                engine.InsertNewWord(textBoxEnglish.Text, textBoxBulgarian.Text, level.LevelId, theme.ThemeId, type.TypeId, subLevel.SubLevelId);
+
+            }
+            else
+            {
+                engine.InsertNewWordWithImage(textBoxEnglish.Text, textBoxBulgarian.Text, level.LevelId, theme.ThemeId, type.TypeId, subLevel.SubLevelId, bytes, contentType);
+            }
             this.Close();
         }
 
@@ -77,6 +89,30 @@ namespace LanguageTrainer
             }
             comboBoxSubLevels.Items.AddRange(subLevels.ToArray());
             comboBoxSubLevels.SelectedIndex = 0;
+        }
+
+        private void ButtonAddImage_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
+            {
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    fileName = openFileDialog1.FileName;
+                    bytes = File.ReadAllBytes(fileName);
+                    contentType = "";
+
+                    switch (Path.GetExtension(fileName))
+                    {
+                        case ".jpg":
+                            contentType = "image/jpeg";
+                            break;
+                        case ".png":
+                            contentType = "image/png";
+                            break;
+                    }
+
+                }
+            }
         }
     }
 }

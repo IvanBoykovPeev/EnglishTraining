@@ -44,12 +44,13 @@ namespace LanguageTrainer
             this.labelType = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBoxSubLevels = new System.Windows.Forms.ComboBox();
+            this.buttonAddImage = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonOk
             // 
             this.buttonOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOk.Location = new System.Drawing.Point(291, 347);
+            this.buttonOk.Location = new System.Drawing.Point(289, 351);
             this.buttonOk.Margin = new System.Windows.Forms.Padding(5);
             this.buttonOk.Name = "buttonOk";
             this.buttonOk.Size = new System.Drawing.Size(218, 35);
@@ -97,7 +98,7 @@ namespace LanguageTrainer
             // buttonCansel
             // 
             this.buttonCansel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCansel.Location = new System.Drawing.Point(24, 347);
+            this.buttonCansel.Location = new System.Drawing.Point(14, 351);
             this.buttonCansel.Margin = new System.Windows.Forms.Padding(5);
             this.buttonCansel.Name = "buttonCansel";
             this.buttonCansel.Size = new System.Drawing.Size(231, 35);
@@ -187,11 +188,22 @@ namespace LanguageTrainer
             this.comboBoxSubLevels.Size = new System.Drawing.Size(267, 28);
             this.comboBoxSubLevels.TabIndex = 13;
             // 
+            // buttonAddImage
+            // 
+            this.buttonAddImage.Location = new System.Drawing.Point(240, 281);
+            this.buttonAddImage.Name = "buttonAddImage";
+            this.buttonAddImage.Size = new System.Drawing.Size(267, 28);
+            this.buttonAddImage.TabIndex = 14;
+            this.buttonAddImage.Text = "Add Image";
+            this.buttonAddImage.UseVisualStyleBackColor = true;
+            this.buttonAddImage.Click += new System.EventHandler(this.ButtonAddImage_Click);
+            // 
             // NewWordForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(521, 400);
+            this.Controls.Add(this.buttonAddImage);
             this.Controls.Add(this.comboBoxSubLevels);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.labelType);
@@ -234,6 +246,7 @@ namespace LanguageTrainer
         private System.Windows.Forms.Label labelType;
         private Label label1;
         private ComboBox comboBoxSubLevels;
+        private Button buttonAddImage;
 
         public ComboBox ComboBoxThemes { get => comboBoxThemes; set => comboBoxThemes = value; }
         public ComboBox ComboBoxLevels { get => comboBoxLevels; set => comboBoxLevels = value; }

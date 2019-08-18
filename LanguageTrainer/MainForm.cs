@@ -14,7 +14,7 @@ namespace LanguageTrainer
 {
     public partial class MainForm : Form
     {
-        public engine engine;
+        public Engine engine;
         public List<string> levels;
         public List<string> subLevels;
         public List<string> themes;
@@ -24,7 +24,8 @@ namespace LanguageTrainer
         bool IsWord = false;
         bool IsPhrase = false;
         bool IsIrregularVerb = false;
-        private static string directory = Path.GetDirectoryName(Application.ExecutablePath);
+        public List<Word> searchWords;
+        private int searchIndex = 0;
 
         public MainForm()
         {
@@ -33,10 +34,12 @@ namespace LanguageTrainer
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            this.engine = new engine();
+            this.engine = new Engine();
             this.levels = new List<string>();
             this.subLevels = new List<string>();
             panelGetBy.Visible = false;
+            panelTheme.Visible = false;
+            panelSearch.Visible = false;
             panelMain.Hide();
             listBoxThemes.Visible = false;
             labelThemes.Visible = false;
@@ -46,9 +49,11 @@ namespace LanguageTrainer
                 this.levels.Add(item.LevelName);
             }
             comboBoxLevels.Items.AddRange(levels.ToArray());
+            if (comboBoxLevels.Items.Count > 0)
+            {
             comboBoxLevels.SelectedIndex = 0;
+            }
             engine.GetSubLevels(comboBoxLevels.SelectedItem.ToString());
-            //comboBoxSubLevels.DataSource = subLevels;
         }
 
         private void comboBoxLevels_SelectedIndexChanged(object sender, EventArgs e)
@@ -66,8 +71,11 @@ namespace LanguageTrainer
             {
                 this.subLevels.Add(item.SubLevelInt.ToString());
             }
+            if (subLevels != null)
+            {
             comboBoxSubLevels.Items.AddRange(subLevels.ToArray());
             comboBoxSubLevels.SelectedIndex = 0;
+            }
         }
 
         private void buttonStart_Click(object sender, EventArgs e)
@@ -90,10 +98,12 @@ namespace LanguageTrainer
         private void buttonNext_Click(object sender, EventArgs e)
         {
             textBoxEnglish.Clear();
-            textBoxGuess.Clear();
+            textBoxGuessWord.Clear();
+            textBoxGuessPastParticiple.Clear();
+            textBoxGuessVerb.Clear();
             labelResult.Text = "";
             labelResult.BackColor = SystemColors.Control;
-            
+            pictureBox1.Image = null;
             
             if (IsWord)
             {
@@ -102,20 +112,20 @@ namespace LanguageTrainer
                 {
                 textBoxEnglish.Text = engine.Words[currentRandom].EnglishWord.ToString();
                 labelWordType.Text = engine.Words[currentRandom].WordType.ToString();
-                    textBoxGuess.Focus();
+                textBoxGuessWord.Focus();
                 }
             }
             if (IsPhrase)
             {
                 currentRandom = rd.Next(engine.Phrases.Count());
                 textBoxEnglish.Text = engine.Phrases[currentRandom].EnglishPhrase.ToString();
-                textBoxGuess.Focus();
+                textBoxGuessWord.Focus();
             }
             if (IsIrregularVerb)
             {
                 currentRandom = rd.Next(engine.IrregularVerbs.Count());
                 textBoxEnglish.Text = engine.IrregularVerbs[currentRandom].VerbBaseForm.ToString();
-                textBoxGuess.Focus();
+                textBoxGuessWord.Focus();
             }
         }
 
@@ -123,8 +133,8 @@ namespace LanguageTrainer
         {
             if (IsWord)
             {
-                if (engine.Words[currentRandom].BulgarianWord.ToString().Contains(textBoxGuess.Text) &&
-                    textBoxGuess.Text != "")
+                if (engine.Words[currentRandom].BulgarianWord.ToString().Contains(textBoxGuessWord.Text) &&
+                    textBoxGuessWord.Text != "")
                 {
                     labelResult.Text = "TRUE";
                     labelResult.BackColor = Color.LightGreen;
@@ -133,13 +143,13 @@ namespace LanguageTrainer
                 {
                     labelResult.Text = "FALSE";
                     labelResult.BackColor = Color.OrangeRed;
-                    textBoxGuess.Focus();
+                    textBoxGuessWord.Focus();
                 }
             }
             if (IsIrregularVerb && textBoxEnglish.Text != "")
             {
-                if (engine.IrregularVerbs[currentRandom].VerbPastSimple.ToString().Contains(textBoxGuess.Text) && 
-                    textBoxGuess.Text != "")
+                if (engine.IrregularVerbs[currentRandom].VerbPastSimple.ToString().Contains(textBoxGuessWord.Text) && 
+                    textBoxGuessWord.Text != "")
                 {
                     labelResult.Text = "TRUE";
                     labelResult.BackColor = Color.LightGreen;
@@ -148,7 +158,7 @@ namespace LanguageTrainer
                 {
                     labelResult.Text = "FALSE";
                     labelResult.BackColor = Color.OrangeRed;
-                    textBoxGuess.Focus();
+                    textBoxGuessWord.Focus();
                 }
             }
 
@@ -156,22 +166,24 @@ namespace LanguageTrainer
 
         private void buttonAnser_Click(object sender, EventArgs e)
         {
-            textBoxGuess.Clear();
+            textBoxGuessWord.Clear();
             if (IsWord)
             {
-                textBoxGuess.Text = engine.Words[currentRandom].BulgarianWord.ToString();
+                textBoxGuessWord.Text = engine.Words[currentRandom].BulgarianWord.ToString();
                 labelResult.Text = "TRUE";
                 labelResult.BackColor = Color.LightGreen;
             }
             if (IsPhrase)
             {
-                textBoxGuess.Text = engine.Phrases[currentRandom].BulgarianPhrase.ToString();
+                textBoxGuessWord.Text = engine.Phrases[currentRandom].BulgarianPhrase.ToString();
                 labelResult.Text = "TRUE";
                 labelResult.BackColor = Color.LightGreen;
             }
             if (IsIrregularVerb)
             {
-                textBoxGuess.Text = engine.IrregularVerbs[currentRandom].VerbPastSimple.ToString();
+                textBoxGuessWord.Text = engine.IrregularVerbs[currentRandom].VerbPastSimple.ToString();
+                textBoxGuessPastParticiple.Text = engine.IrregularVerbs[currentRandom].VerbPastParticiple.ToString();
+                textBoxGuessVerb.Text = engine.IrregularVerbs[currentRandom].BulgarianVerb.ToString();
                 labelResult.Text = "TRUE";
                 labelResult.BackColor = Color.LightGreen;
             }
@@ -179,30 +191,30 @@ namespace LanguageTrainer
 
         private void toolStripButtonWords_Click(object sender, EventArgs e)
         {
+            this.Controls.Remove(this.panelSearch);
             IsWord = true;
             IsPhrase = false;
             IsIrregularVerb = false;
             panelGetBy.Visible = true;
+            panelTheme.Visible = true;
             panelMain.Show();
             buttonByLevel.Text = "WORDS by Level";
             buttonByThemes.Text = "WORDS by Themes";
             labelEnglish.Text = "English Word";
             labelGuess.Text = "Guess Word";
             labelGuessVerb.Hide();
-            labelVerbPastSimple.Hide();
             buttonByTypes.Show();
             comboBoxTypes.Show();
             buttonByThemes.Show();
             labelThemes.Visible = true;
             labelTypes.Show();
             textBoxEnglish.Clear();
-            textBoxGuess.Clear();
-            textBoxPastSimple.Hide();
-            textBoxGuessPastSimple.Hide();
+            textBoxGuessWord.Clear();
+            textBoxGuessVerb.Hide();
             labelResult.Text = "";
             labelResult.BackColor = SystemColors.Control;
-            
-            
+            labelGuessPastParticiple.Hide();
+            textBoxGuessPastParticiple.Hide();
 
             this.themes = new List<string>();
             foreach (var item in engine.Themes)
@@ -219,6 +231,7 @@ namespace LanguageTrainer
             listBoxThemes.Items.AddRange(themes.ToArray());
             listBoxThemes.SelectedIndex = 0;
             listBoxThemes.Visible = true;
+            textBoxSearchWord.Text = "Seatch word";
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
@@ -227,6 +240,8 @@ namespace LanguageTrainer
             IsWord = false;
             IsIrregularVerb = false;
             panelGetBy.Visible = true;
+            panelTheme.Visible = false;
+            panelSearch.Visible = false;
             listBoxThemes.Visible = false;
             panelMain.Show();
             buttonByLevel.Text = "PHRASES by Level";
@@ -238,7 +253,7 @@ namespace LanguageTrainer
             buttonByTypes.Hide();
             comboBoxTypes.Hide();
             textBoxEnglish.Clear();
-            textBoxGuess.Clear();
+            textBoxGuessWord.Clear();
             labelResult.Text = "";
             labelResult.BackColor = SystemColors.Control;
         }
@@ -246,9 +261,10 @@ namespace LanguageTrainer
         private void buttonByLevel_Click(object sender, EventArgs e)
         {
             textBoxEnglish.Clear();
-            textBoxGuess.Clear();
+            textBoxGuessWord.Clear();
             labelResult.Text = "";
             labelResult.BackColor = SystemColors.Control;
+            pictureBox1.Image = null;
             if (IsWord)
             {                
                 engine.GetWordByLevel(comboBoxLevels.SelectedItem.ToString());
@@ -257,7 +273,8 @@ namespace LanguageTrainer
                 {
                     textBoxEnglish.Text = engine.Words[currentRandom].EnglishWord.ToString();
                     labelWordType.Text = engine.Words[currentRandom].WordType.ToString();
-                    textBoxGuess.Focus();
+                                       
+                    textBoxGuessWord.Focus();
                 }
                 else
                 {
@@ -269,8 +286,8 @@ namespace LanguageTrainer
             if (IsPhrase)
             {
                 textBoxEnglish.Clear();
-                textBoxGuess.Clear();
-                textBoxGuess.Focus();
+                textBoxGuessWord.Clear();
+                textBoxGuessWord.Focus();
                 engine.GetPhrases(comboBoxLevels.SelectedItem.ToString());
                 currentRandom = rd.Next(engine.Phrases.Count());
                 textBoxEnglish.Text = engine.Phrases[currentRandom].EnglishPhrase.ToString();
@@ -284,7 +301,7 @@ namespace LanguageTrainer
                 {
                     textBoxEnglish.Text = engine.IrregularVerbs[currentRandom].VerbBaseForm.ToString();
 
-                    textBoxGuess.Focus();
+                    textBoxGuessWord.Focus();
                 }
                 else
                 {
@@ -293,10 +310,18 @@ namespace LanguageTrainer
             }
         }
 
+        private static Image GetImages(byte[] wordPic)
+        {
+            using (MemoryStream ms = new MemoryStream(wordPic))
+            {
+                return (Image.FromStream(ms));
+            }
+        }
+
         private void buttonByThemes_Click(object sender, EventArgs e)
         {
             textBoxEnglish.Clear();
-            textBoxGuess.Clear();
+            textBoxGuessWord.Clear();
             labelResult.Text = "";
             labelResult.BackColor = SystemColors.Control;
             if (IsWord)
@@ -307,7 +332,7 @@ namespace LanguageTrainer
                 {
                     textBoxEnglish.Text = engine.Words[currentRandom].EnglishWord.ToString();
                     labelWordType.Text = engine.Words[currentRandom].WordType.ToString();
-                    textBoxGuess.Focus();
+                    textBoxGuessWord.Focus();
                 }
                 else
                 {
@@ -319,7 +344,7 @@ namespace LanguageTrainer
         private void buttonByTypes_Click(object sender, EventArgs e)
         {
             textBoxEnglish.Clear();
-            textBoxGuess.Clear();
+            textBoxGuessWord.Clear();
             labelResult.Text = "";
             labelResult.BackColor = SystemColors.Control;
             if (IsWord)
@@ -330,7 +355,7 @@ namespace LanguageTrainer
                 {
                     textBoxEnglish.Text = engine.Words[currentRandom].EnglishWord.ToString();
                     labelWordType.Text = engine.Words[currentRandom].WordType.ToString();
-                    textBoxGuess.Focus();
+                    textBoxGuessWord.Focus();
                 }
                 else
                 {
@@ -365,7 +390,7 @@ namespace LanguageTrainer
         {
             SubLevel subLevel = engine.SubLevels.Find(x => x.SubLevelInt.ToString() == comboBoxSubLevels.SelectedItem.ToString());
             textBoxEnglish.Clear();
-            textBoxGuess.Clear();
+            textBoxGuessWord.Clear();
             labelResult.Text = "";
             labelResult.BackColor = SystemColors.Control;
             if (IsWord)
@@ -377,7 +402,7 @@ namespace LanguageTrainer
                 {
                     textBoxEnglish.Text = engine.Words[currentRandom].EnglishWord.ToString();
                     labelWordType.Text = engine.Words[currentRandom].WordType.ToString();
-                    textBoxGuess.Focus();
+                    textBoxGuessWord.Focus();
                 }
                 else
                 {
@@ -389,17 +414,12 @@ namespace LanguageTrainer
             if (IsPhrase)
             {
                 textBoxEnglish.Clear();
-                textBoxGuess.Clear();
-                textBoxGuess.Focus();
+                textBoxGuessWord.Clear();
+                textBoxGuessWord.Focus();
                 engine.GetPhrases(comboBoxLevels.SelectedItem.ToString());
                 currentRandom = rd.Next(engine.Phrases.Count());
                 textBoxEnglish.Text = engine.Phrases[currentRandom].EnglishPhrase.ToString();
             }
-        }
-
-        private void comboBoxSubLevels_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void ToolStripLabel1_Click(object sender, EventArgs e)
@@ -420,14 +440,14 @@ namespace LanguageTrainer
             labelGuess.Text = "Guess Past Simple";
             labelTypes.Hide();
             labelWordType.Hide();
-            labelVerbPastSimple.Show();
             labelGuessVerb.Show();
+            labelGuessPastParticiple.Show();
             buttonByTypes.Hide();
             comboBoxTypes.Hide();
             textBoxEnglish.Clear();
-            textBoxGuess.Clear();
-            textBoxPastSimple.Show();
-            textBoxGuessPastSimple.Show();
+            textBoxGuessWord.Clear();
+            textBoxGuessVerb.Show();
+            textBoxGuessPastParticiple.Show();
             labelResult.Text = "";
             labelResult.BackColor = SystemColors.Control;
 
@@ -438,6 +458,95 @@ namespace LanguageTrainer
         {
             NewIrregularVerbForm newIrregularForm = new NewIrregularVerbForm();
             newIrregularForm.Show();
+        }
+
+        private void ButtonShowPicture_Click(object sender, EventArgs e)
+        {
+            if(IsWord)
+            {
+                if (engine.Words[currentRandom].WordPic != null)
+                {
+                    pictureBox1.Image = GetImages(engine.Words[currentRandom].WordPic);
+                }
+            }
+        }
+
+        private void ButtonSearchWord_Click(object sender, EventArgs e)
+        {
+            labelResultNumber.Text = "Find: ";
+            if (searchWords == null)
+            {
+                searchWords = engine.SearchWord(textBoxSearchWord.Text.ToString());
+            }
+            else
+            {
+                searchWords.Clear();
+                searchWords = engine.SearchWord(textBoxSearchWord.Text.ToString());
+            }
+            
+            if (searchWords.Count >= 1)
+            {                
+                textBoxEnglishWordSearch.Text = searchWords[searchIndex].EnglishWord;
+                textBoxBulgarianWordSearch.Text = searchWords[searchIndex].BulgarianWord;
+                labelResultNumber.Text += searchWords.Count.ToString() + " words";
+            }
+            else
+            {
+                string message = "No word: " + textBoxSearchWord.Text;
+                labelResultNumber.Text = message;
+            }
+            textBoxSearchWord.Text = "Seartch word";
+        }
+
+        private void buttonSearchNext_Click(object sender, EventArgs e)
+        {
+            if (searchIndex < searchWords.Count - 1)
+            {
+                searchIndex++;
+                textBoxEnglishWordSearch.Text = searchWords[searchIndex].EnglishWord;
+                textBoxBulgarianWordSearch.Text = searchWords[searchIndex].BulgarianWord;
+            }
+            else
+            {
+                searchIndex = 0;
+                textBoxEnglishWordSearch.Text = searchWords[searchIndex].EnglishWord;
+                textBoxBulgarianWordSearch.Text = searchWords[searchIndex].BulgarianWord;
+            }
+        }
+
+        private void TextBoxSearchWord_Click(object sender, EventArgs e)
+        {
+            textBoxSearchWord.Text = "";
+        }
+
+        private void ToolStripLabel3_Click(object sender, EventArgs e)
+        {
+            panelGetBy.Hide();
+            panelTheme.Hide();
+            panelMain.Hide();
+            
+            panelSearch.Visible = true;
+            //searchPanel.Show();
+        }
+
+        private void EditWordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EditForm editForm = new EditForm();
+            editForm.Show();
+        }
+
+        private void DeleteWordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DeleteForm deleteForm = new DeleteForm();
+            deleteForm.Show();
+        }
+
+        private void EXITToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are You Sure To Exit Programme ?", "Exit", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                Application.Exit();
+            }
         }
     }
 }
