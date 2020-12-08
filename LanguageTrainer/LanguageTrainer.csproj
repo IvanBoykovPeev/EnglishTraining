@@ -53,7 +53,9 @@
     </StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
+    <Reference Include="System">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\System.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -66,69 +68,75 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DeleteForm.cs">
+    <Compile Include="View\DeleteForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DeleteForm.Designer.cs">
+    <Compile Include="View\DeleteForm.Designer.cs">
       <DependentUpon>DeleteForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="EditForm.cs">
+    <Compile Include="View\EditForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EditForm.Designer.cs">
+    <Compile Include="View\EditForm.Designer.cs">
       <DependentUpon>EditForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="NewIrregularVerbForm.cs">
+    <Compile Include="View\NewIrregularVerbForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewIrregularVerbForm.Designer.cs">
+    <Compile Include="View\NewIrregularVerbForm.Designer.cs">
       <DependentUpon>NewIrregularVerbForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="NewPhraseForm.cs">
+    <Compile Include="View\NewPhraseForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewPhraseForm.Designer.cs">
+    <Compile Include="View\NewPhraseForm.Designer.cs">
       <DependentUpon>NewPhraseForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="NewThemeForm.cs">
+    <Compile Include="View\NewThemeForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewThemeForm.Designer.cs">
+    <Compile Include="View\NewThemeForm.Designer.cs">
       <DependentUpon>NewThemeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="NewWordForm.cs">
+    <Compile Include="View\NewWordForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewWordForm.Designer.cs">
+    <Compile Include="View\NewWordForm.Designer.cs">
       <DependentUpon>NewWordForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="View\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="View\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="DeleteForm.resx">
+    <Compile Include="View\SearchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\SearchForm.Designer.cs">
+      <DependentUpon>SearchForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="View\DeleteForm.resx">
       <DependentUpon>DeleteForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EditForm.resx">
+    <EmbeddedResource Include="View\EditForm.resx">
       <DependentUpon>EditForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NewIrregularVerbForm.resx">
+    <EmbeddedResource Include="View\NewIrregularVerbForm.resx">
       <DependentUpon>NewIrregularVerbForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NewPhraseForm.resx">
+    <EmbeddedResource Include="View\NewPhraseForm.resx">
       <DependentUpon>NewPhraseForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NewThemeForm.resx">
+    <EmbeddedResource Include="View\NewThemeForm.resx">
       <DependentUpon>NewThemeForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NewWordForm.resx">
+    <EmbeddedResource Include="View\NewWordForm.resx">
       <DependentUpon>NewWordForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="View\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -141,6 +149,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="View\SearchForm.resx">
+      <DependentUpon>SearchForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -159,15 +170,6 @@
       <Project>{D15C318E-7DF8-45A8-BCBA-24344A9C142E}</Project>
       <Name>LanguageTrainerDAL</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="DatabaseWordBank.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DatabaseWordBank_log.ldf">
-      <DependentUpon>DatabaseWordBank.mdf</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
