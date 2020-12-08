@@ -11,6 +11,7 @@
     <AssemblyName>LanguageTrainerDAL</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -23,7 +24,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -56,15 +56,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Engine.cs" />
-    <Compile Include="IrregularVerb.cs" />
-    <Compile Include="Level.cs" />
-    <Compile Include="Phrase.cs" />
+    <Compile Include="Repository\Repository.cs" />
+    <Compile Include="Model\IrregularVerb.cs" />
+    <Compile Include="Model\Level.cs" />
+    <Compile Include="Model\Phrase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SubLevel.cs" />
-    <Compile Include="Theme.cs" />
-    <Compile Include="Type.cs" />
-    <Compile Include="Word.cs" />
+    <Compile Include="Model\SubLevel.cs" />
+    <Compile Include="Model\Theme.cs" />
+    <Compile Include="Model\Type.cs" />
+    <Compile Include="Model\Word.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
@@ -77,6 +77,15 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DatabaseWordBank.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DatabaseWordBank_log.ldf">
+      <DependentUpon>DatabaseWordBank.mdf</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
