@@ -64,7 +64,7 @@
     <Compile Include="Model\Theme.cs" />
     <Compile Include="Model\Type.cs" />
     <Compile Include="Model\Word.cs" />
-    <Compile Include="Service\Servise.cs" />
+    <Compile Include="Service.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
