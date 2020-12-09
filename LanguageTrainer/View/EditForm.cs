@@ -15,7 +15,7 @@ namespace LanguageTrainer
     {
         public List<Word> searchWords;
         private int searchIndex = 0;
-        private Repository engine;
+        private Service engine;
 
 
         public EditForm()
@@ -51,7 +51,7 @@ namespace LanguageTrainer
 
         private void EditForm_Load(object sender, EventArgs e)
         {
-            engine = new Repository();
+            engine = new Service();
         }
 
         private void TextBoxSearch_Click(object sender, EventArgs e)

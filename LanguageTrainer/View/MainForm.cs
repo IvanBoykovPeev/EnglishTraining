@@ -14,7 +14,7 @@ namespace LanguageTrainer
 {
     public partial class MainForm : Form
     {
-        public Repository repository;
+        public Service repository;
         public List<string> levels;
         public List<string> subLevels;
         public List<string> themes;
@@ -33,7 +33,7 @@ namespace LanguageTrainer
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            this.repository = new Repository();
+            this.repository = new Service();
             this.levels = new List<string>();
             this.subLevels = new List<string>();
             panelMain.Hide();

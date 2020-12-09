@@ -14,7 +14,7 @@ namespace LanguageTrainer
     public partial class NewIrregularVerbForm : Form
     {
         public List<string> levels;
-        public Repository engine;
+        public Service engine;
         public NewIrregularVerbForm()
         {
             InitializeComponent();
@@ -23,7 +23,7 @@ namespace LanguageTrainer
         private void NewIrregularVerb_Load(object sender, EventArgs e)
         {
             this.levels = new List<string>();
-            this.engine = new Repository();
+            this.engine = new Service();
             foreach (var item in engine.Levels)
             {
                 this.levels.Add(item.LevelName);

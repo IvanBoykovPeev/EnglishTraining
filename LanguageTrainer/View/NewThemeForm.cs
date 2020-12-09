@@ -13,7 +13,7 @@ namespace LanguageTrainer
 {
     public partial class NewThemeForm : Form
     {
-        public Repository engine;
+        public Service engine;
         public NewThemeForm()
         {
             InitializeComponent();
@@ -32,7 +32,7 @@ namespace LanguageTrainer
 
         private void NewThemeForm_Load(object sender, EventArgs e)
         {
-            engine = new Repository();
+            engine = new Service();
         }
     }
 }
