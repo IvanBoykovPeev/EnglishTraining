@@ -47,7 +47,7 @@ namespace LanguageTrainer
             comboBoxLevels.Items.AddRange(levels.ToArray());
             if (comboBoxLevels.Items.Count > 0)
             {
-            comboBoxLevels.SelectedIndex = 0;
+                comboBoxLevels.SelectedIndex = 0;
             }
             repository.GetSubLevels(comboBoxLevels.SelectedItem.ToString());
         }
