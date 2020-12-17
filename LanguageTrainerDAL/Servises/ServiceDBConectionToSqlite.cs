@@ -14,11 +14,9 @@ namespace LanguageTrainerDAL
     {
         //after build
         private static string directory = Path.GetDirectoryName(Application.ExecutablePath) + "\\EnglishTrainingDBSqlite.db";
-
-        private string currentDirectory = directory;
-        private string connectionString = @"Data Source=" + directory;       
-
-        //@"server=.;" +
+        
+        //private string currentDirectory = directory;
+        private string connectionString = @"Data Source=" + directory;
         //"integrated security=true;database=WordBank";
         private SqliteConnection connection;
         private List<Level> levels = new List<Level>();
@@ -32,7 +30,8 @@ namespace LanguageTrainerDAL
         public ServiceDBConectionToSqlite()
         {
             connection = new SqliteConnection(connectionString);
-            //GetLevels();
+            MessageBox.Show(connectionString);
+            GetLevels();
             //GetThemes();
             //GetTypes();
         }
@@ -794,7 +793,7 @@ namespace LanguageTrainerDAL
         public List<Phrase> Phrases { get => phrases; set => phrases = value; }
         public List<LanguageTrainerDAL.Type> Types { get => types; set => types = value; }
         public List<Level> Levels { get => levels; set => levels = value; }
-        public string CurrentDirectory { get => currentDirectory; set => currentDirectory = value; }
+        
         public List<SubLevel> SubLevels { get => subLevels; set => subLevels = value; }
         public List<IrregularVerb> IrregularVerbs { get => irregularVerbs; set => irregularVerbs = value; }
         public List<Word> Noun { get => noun; set => noun = value; }
