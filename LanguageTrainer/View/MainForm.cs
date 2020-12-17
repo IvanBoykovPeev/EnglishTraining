@@ -14,7 +14,7 @@ namespace LanguageTrainer
 {
     public partial class MainForm : Form
     {
-        public ServiceDBConectionToSqlite repository;
+        public ServiceMSLockalDb repository;
         public List<string> levels;
         public List<string> subLevels;
         public List<string> themes;
@@ -33,7 +33,7 @@ namespace LanguageTrainer
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            this.repository = new ServiceDBConectionToSqlite();
+            this.repository = new ServiceMSLockalDb();
             this.levels = new List<string>();
             this.subLevels = new List<string>();
             panelMain.Hide();
