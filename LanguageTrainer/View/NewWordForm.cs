@@ -18,7 +18,7 @@ namespace LanguageTrainer
         public List<string> subLevels;
         public List<string> themes;
         public List<string> types;
-        public Service engine;
+        public ServiceMSLockalDb engine;
         string fileName;
         byte[] bytes;
         string contentType;
@@ -33,7 +33,7 @@ namespace LanguageTrainer
             this.themes = new List<string>();
             this.types = new List<string>();
             this.subLevels = new List<string>();
-            this.engine = new Service();
+            this.engine = new ServiceMSLockalDb();
             foreach (var item in engine.Levels)
             {
                 this.levels.Add(item.LevelName);

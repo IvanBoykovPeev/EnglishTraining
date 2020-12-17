@@ -645,6 +645,7 @@
             this.comboBoxSubLevels.Name = "comboBoxSubLevels";
             this.comboBoxSubLevels.Size = new System.Drawing.Size(180, 28);
             this.comboBoxSubLevels.TabIndex = 26;
+            //this.comboBoxSubLevels.SelectedIndexChanged += new System.EventHandler(this.comboBoxSubLevels_SelectedIndexChanged);
             // 
             // labelWordType
             // 

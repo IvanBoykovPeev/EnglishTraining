@@ -14,7 +14,7 @@ namespace LanguageTrainer
     public partial class SearchForm : Form
     {
         public List<Word> searchWord;
-        public Service searchEngine;
+        public ServiceMSLockalDb searchEngine;
         private int searchIndex = 0;
         public SearchForm()
         {
@@ -23,7 +23,7 @@ namespace LanguageTrainer
 
         private void SearchForm_Load(object sender, EventArgs e)
         {
-            this.searchEngine = new Service();
+            this.searchEngine = new ServiceMSLockalDb();
         }
 
         private void ButtonSearchWord_Click(object sender, EventArgs e)

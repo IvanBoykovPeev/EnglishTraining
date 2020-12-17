@@ -15,7 +15,7 @@ namespace LanguageTrainer
     {
         public List<Word> searchWords;
         private int searchIndex = 0;
-        private Service engine;
+        private ServiceMSLockalDb engine;
         public DeleteForm()
         {
             InitializeComponent();
@@ -49,7 +49,7 @@ namespace LanguageTrainer
 
         private void DeleteForm_Load(object sender, EventArgs e)
         {
-            engine = new Service();
+            engine = new ServiceMSLockalDb();
         }
 
         private void TextBoxSearch_Click(object sender, EventArgs e)

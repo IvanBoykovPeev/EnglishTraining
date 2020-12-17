@@ -14,7 +14,7 @@ namespace LanguageTrainer
 {
     public partial class MainForm : Form
     {
-        public Service repository;
+        public ServiceDBConectionToSqlite repository;
         public List<string> levels;
         public List<string> subLevels;
         public List<string> themes;
@@ -33,7 +33,7 @@ namespace LanguageTrainer
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            this.repository = new Service();
+            this.repository = new ServiceDBConectionToSqlite();
             this.levels = new List<string>();
             this.subLevels = new List<string>();
             panelMain.Hide();
@@ -246,8 +246,9 @@ namespace LanguageTrainer
             labelSubLevel.Show();
             comboBoxSubLevels.Show();
             labelWordType.Show();
-
             this.themes = new List<string>();
+            themes.Clear();
+            repository.GetThemes();
             foreach (var item in repository.Themes)
             {
                 this.themes.Add(item.ThemeName);
@@ -259,8 +260,12 @@ namespace LanguageTrainer
             }
             comboBoxTypes.Items.AddRange(types.ToArray());
             comboBoxTypes.SelectedIndex = 0;
+            listBoxThemes.Items.Clear();
             listBoxThemes.Items.AddRange(themes.ToArray());
-            listBoxThemes.SelectedIndex = 0;
+            //if (listBoxThemes.Items.Count > 0)
+            //{
+            //    listBoxThemes.SelectedIndex = 0;
+            //}
             listBoxThemes.Visible = true;
         }
 
@@ -371,17 +376,24 @@ namespace LanguageTrainer
             labelResult.BackColor = SystemColors.Control;
             if (IsWord)
             {
-                repository.GetWordByTheme(listBoxThemes.SelectedItem.ToString());
-                currentRandom = rd.Next(repository.Words.Count());
-                if (repository.Words.Count > 0)
+                if (listBoxThemes.SelectedItem != null)
                 {
-                    textBoxEnglish.Text = repository.Words[currentRandom].EnglishWord.ToString();
-                    labelWordType.Text = repository.Words[currentRandom].WordType.ToString();
-                    textBoxGuessWord.Focus();
+                    repository.GetWordByTheme(listBoxThemes.SelectedItem.ToString());
+                    currentRandom = rd.Next(repository.Words.Count());
+                    if (repository.Words.Count > 0)
+                    {
+                        textBoxEnglish.Text = repository.Words[currentRandom].EnglishWord.ToString();
+                        labelWordType.Text = repository.Words[currentRandom].WordType.ToString();
+                        textBoxGuessWord.Focus();
+                    }
+                    else
+                    {
+                        MessageBox.Show("There isn't words in this themes!");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("There isn't words in this themes!");
+                    MessageBox.Show("There isn't themes!");
                 }
             }
         }
@@ -572,6 +584,5 @@ namespace LanguageTrainer
             labelResult.Text = "";
             labelResult.BackColor = SystemColors.Control;
         }
-
     }
 }
