@@ -7,6 +7,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanguageTrainer", "Language
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanguageTrainerDAL", "LanguageTrainerDAL\LanguageTrainerDAL.csproj", "{D15C318E-7DF8-45A8-BCBA-24344A9C142E}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup1", "Setup1\Setup1.vdproj", "{D5627E13-7242-45EA-9B63-F48121E17FA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsETwithSqlite", "WindowsFormsETwithSqlite\WindowsFormsETwithSqlite.csproj", "{A25E4C11-A788-4EEF-A99B-26ACE168B238}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{3A3BBB63-72D5-4314-8E54-51CB8C7DB4F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanguageTrainingVM", "EnglishTrainingVM\LanguageTrainingVM.csproj", "{13F71B00-0FD5-497F-AC3C-CBBD727FF019}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +29,20 @@ Global
 		{D15C318E-7DF8-45A8-BCBA-24344A9C142E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D15C318E-7DF8-45A8-BCBA-24344A9C142E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D15C318E-7DF8-45A8-BCBA-24344A9C142E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5627E13-7242-45EA-9B63-F48121E17FA3}.Debug|Any CPU.ActiveCfg = Debug
+		{D5627E13-7242-45EA-9B63-F48121E17FA3}.Release|Any CPU.ActiveCfg = Release
+		{A25E4C11-A788-4EEF-A99B-26ACE168B238}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A25E4C11-A788-4EEF-A99B-26ACE168B238}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A25E4C11-A788-4EEF-A99B-26ACE168B238}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A25E4C11-A788-4EEF-A99B-26ACE168B238}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A3BBB63-72D5-4314-8E54-51CB8C7DB4F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A3BBB63-72D5-4314-8E54-51CB8C7DB4F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A3BBB63-72D5-4314-8E54-51CB8C7DB4F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A3BBB63-72D5-4314-8E54-51CB8C7DB4F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13F71B00-0FD5-497F-AC3C-CBBD727FF019}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13F71B00-0FD5-497F-AC3C-CBBD727FF019}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13F71B00-0FD5-497F-AC3C-CBBD727FF019}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13F71B00-0FD5-497F-AC3C-CBBD727FF019}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
