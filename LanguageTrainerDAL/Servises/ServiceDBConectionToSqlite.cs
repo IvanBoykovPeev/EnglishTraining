@@ -413,9 +413,9 @@ namespace LanguageTrainerDAL
             return wordsTmp;
         }
 
-        public void GetNounByLevel(string currentlevel)
+        public List<Word> GetNounByLevel(string currentlevel)
         {
-            Words.Clear();
+            List<Word> wordsTmp = new List<Word>();
             try
             {
                 string SqliteCommand = "" +
@@ -458,11 +458,13 @@ namespace LanguageTrainerDAL
             }
             catch (SqlException ex)
             {
+                MessageBox.Show(ex.Message.ToString());
             }
             finally
             {
                 connection.Close();
             }
+            return wordsTmp;
         }
 
         public void GetWordByTheme(string theme)
