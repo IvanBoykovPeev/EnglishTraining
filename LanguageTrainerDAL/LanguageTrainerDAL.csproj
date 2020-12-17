@@ -102,6 +102,7 @@
     <Compile Include="Model\Theme.cs" />
     <Compile Include="Model\Type.cs" />
     <Compile Include="Model\Word.cs" />
+    <Compile Include="Service.cs" />
     <Compile Include="Servises\ServiceMSLockalDb.cs" />
     <Compile Include="Servises\IServiceDBConection.cs" />
     <Compile Include="Servises\ServiceDBConectionToSqlite.cs" />
